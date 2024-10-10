@@ -1,0 +1,45 @@
+<div class="modal-container">
+    <div class="modal-card">
+        <h4 class="mt-3 text-center">Register</h4>
+        <div class="modal-body">
+            <form [formGroup]="registerForm">
+                <div class="form-group mb-3">
+                    <label for="username">Username</label>
+                    <input formControlName="username" type="text" id="username" class="form-control" placeholder="Enter your username">
+                    <small *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="text-danger">
+                        Username is required.
+                    </small>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email">Email</label>
+                    <input formControlName="email" type="email" id="email" class="form-control" placeholder="Enter your email">
+                    <small *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger">
+                        Please enter a valid email.
+                    </small>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password">Password</label>
+                    <input formControlName="password" type="password" id="password" class="form-control" placeholder="Enter your password">
+                    <small *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger">
+                        Password must be at least 8 characters long, one special sign and one uppercase letter.
+                    </small>
+                </div>
+                <div class="form-group mb-4">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input formControlName="confirmPassword" type="password" id="confirm-password" class="form-control" placeholder="Confirm your password">
+                    <div *ngIf="registerForm.errors?.['mismatch'] && registerForm.controls['confirmPassword'].touched">
+                        <small class="text-danger">Passwords do not match.</small>
+                      </div>
+                </div>
+            </form>
+        </div>
+        <div class="row text-center mb-3">
+            <div class="col-6">
+                <button class="btn btn-secondary w-100" (click)="closeMe()">Close</button>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-primary w-100" (click)="confirm()">Register</button>
+            </div>
+        </div>
+    </div>
+</div>

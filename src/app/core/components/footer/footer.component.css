@@ -1,0 +1,77 @@
+/* General styling for the unauthorized page */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f0f4f8 25%, #e8ecf0 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Container for centering the card */
+  .unauthorized-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Card appearance */
+  .card {
+    max-width: 400px;
+    border: none;
+    border-radius: 12px;
+  }
+  
+  /* Header styling */
+  .card-header {
+    background-color: #dc3545; /* Red danger color */
+    color: #fff;
+    border-radius: 12px 12px 0 0;
+  }
+  
+  /* Add animation to the card */
+  .animated-card {
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* Custom button hover effect */
+  .btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+    transition: 0.3s;
+  }
+  
+  /* SVG icon styling */
+  .icon-container {
+    margin-top: 20px;
+  }
+  
+  .icon-container svg {
+    animation: bounce 1s infinite;
+  }
+  
+  /* Keyframe animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  

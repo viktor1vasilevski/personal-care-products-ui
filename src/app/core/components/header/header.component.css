@@ -1,0 +1,14 @@
+.navbar-bordered {
+    border-bottom: 1px solid black;
+}
+
+.modal-container{
+    display: flex;
+    justify-content: center;
+}
+
+#img-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
