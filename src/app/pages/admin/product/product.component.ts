@@ -16,9 +16,9 @@ export class ProductComponent implements OnInit {
   products: Product[] = [];
   totalCount: number = 0;
   skip: number = 0;
-  itemsPerPage : number = 5;
-  currentPage = 1; // Track the current page
-  totalPages: number[] = []; // Array to hold total page numbers
+  itemsPerPage : number = 10;
+  currentPage = 1;
+  totalPages: number[] = [];
 
   filterForm: FormGroup;
 
@@ -44,7 +44,6 @@ export class ProductComponent implements OnInit {
         this.products = [];
       }
 
-      // Ensure totalCount is defined and a number, defaulting to 0 if not
       this.totalCount = typeof response?.totalCount === 'number' ? response.totalCount : 0;
 
       this.calculateTotalPages();
@@ -58,24 +57,24 @@ export class ProductComponent implements OnInit {
 
   changePage(page: number): void {
     this.currentPage = page;
-    this.skip = (page - 1) * this.itemsPerPage; // Calculate skip value based on current page
+    this.skip = (page - 1) * this.itemsPerPage;
     this.loadProducts();
   }
 
   onItemsPerPageChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement; // Cast to HTMLSelectElement
-    const parsedValue = Number(selectElement.value); // Convert the value to a number
-    if (!isNaN(parsedValue)) { // Check if the conversion was successful
-      this.itemsPerPage = parsedValue; // Update items per page
-      this.skip = 0; // Reset to first page
-      this.currentPage = 1; // Reset current page
-      this.loadProducts(); // Load products with new items per page
+    const selectElement = event.target as HTMLSelectElement;
+    const parsedValue = Number(selectElement.value);
+    if (!isNaN(parsedValue)) {
+      this.itemsPerPage = parsedValue;
+      this.skip = 0;
+      this.currentPage = 1;
+      this.loadProducts();
     }
   }
   
 
   onFilterChange(): void {
-    this.skip = 0; // Reset to the first page when filtering
+    this.skip = 0;
     this.loadProducts();
   }
 

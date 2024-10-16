@@ -4,6 +4,8 @@ import { ProductComponent } from './pages/admin/product/product.component';
 import { authGuard } from './core/guards/auth.guard';
 import { UnauthorizedComponent } from './shared/unauthorized/unauthorized.component';
 import { HomeComponent } from './core/components/home/home.component';
+import { SubcategoryComponent } from './pages/admin/subcategory/subcategory.component';
+import { CategoryComponent } from './pages/admin/category/category.component';
 
 export const routes: Routes = [
 
@@ -11,6 +13,18 @@ export const routes: Routes = [
     { 
         path: 'admin/product', 
         component: ProductComponent,
+        canActivate: [ authGuard ],
+        data: { roles: ['Admin'] }
+    },
+    { 
+        path: 'admin/subcategory', 
+        component: SubcategoryComponent,
+        canActivate: [ authGuard ],
+        data: { roles: ['Admin'] }
+    },
+    { 
+        path: 'admin/category', 
+        component: CategoryComponent,
         canActivate: [ authGuard ],
         data: { roles: ['Admin'] }
     },

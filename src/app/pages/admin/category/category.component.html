@@ -1,0 +1,26 @@
+<h2 class="mb-4">Category List</h2>
+<table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Created</th>
+        <th>Created By</th>
+        <th>Last Modified</th>
+        <th>Last Modified By</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let categories of categories">
+        <td>{{ categories.name }}</td>
+        <td>{{ categories.created | date:'dd/MM/yyyy' }}</td>
+        <td>{{ categories.createdBy }}</td>
+        <td>{{ categories.lastModified | date:'dd/MM/yyyy' }}</td>
+        <td>{{ categories.lastModifiedBy }}</td>
+        <td>
+          <!-- <button class="btn btn-primary btn-sm" (click)="editsubcategory(subcategory)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deletesubcategory(subcategory)">Delete</button> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>

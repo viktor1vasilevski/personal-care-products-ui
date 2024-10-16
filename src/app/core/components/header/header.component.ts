@@ -53,12 +53,11 @@ export class HeaderComponent implements OnInit {
         
           this._authService.setSession(token, this.user);
           this.isLoggedIn = true;
-          debugger
+          
           if(this.user.role == 'Admin') {
             this._router.navigate(['/admin/product'])
           } else {
             this._router.navigate(['/soaps/beard'])
-
           }
 
           this._toastr.success(response.message, 'Success', { timeOut: 3500, positionClass: 'toast-bottom-right' });

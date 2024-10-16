@@ -21,6 +21,12 @@
           <li *ngIf="user?.role === 'Admin'" class="nav-item dropdown">
             <a class="nav-link active" aria-current="page" routerLink="/admin/product">Product</a>
           </li>
+          <li *ngIf="user?.role === 'Admin'" class="nav-item dropdown">
+            <a class="nav-link active" aria-current="page" routerLink="/admin/subcategory">Subcategory</a>
+          </li>
+          <li *ngIf="user?.role === 'Admin'" class="nav-item dropdown">
+            <a class="nav-link active" aria-current="page" routerLink="/admin/category">Category</a>
+          </li>
         </ul>
         <div class="d-flex align-items-center">
             <span *ngIf="isLoggedIn" class="me-3">Username : {{ user?.username }} | Role : {{ user?.role }}</span>

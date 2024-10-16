@@ -5,6 +5,12 @@ export const API_ENDPOINTS = {
     LOGIN_USER: '/LoginUser',
     LOGOUT_USER: '/LogoutUser',
     REGISTER: '/register',
+
+
+
+    SUBCATEGORY: '/subcategory',
+    CATEGORY: '/category',
+
     GET_BY_ID: (id: number) => `/GetById/${id}`,
     GET_BY_CATEGORY: (category: string) => `/GetByCategory/${category}`
   };
