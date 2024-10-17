@@ -19,4 +19,10 @@ export class CategoryService {
     const url = `${this.baseUrl}${API_ENDPOINTS.CATEGORY}${API_ENDPOINTS.GET}`;
     return this._dataApiService.getAll(url, params);
   }
+
+  createCategory(paramsObj: { [key: string]: any } = {}): Observable<any[]> {
+    const params = new HttpParams({ fromObject: paramsObj });
+    const url = `${this.baseUrl}${API_ENDPOINTS.CATEGORY}${API_ENDPOINTS.CREATE}`;
+    return this._dataApiService.create(url, params);
+  }
 }

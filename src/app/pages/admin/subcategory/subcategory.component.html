@@ -1,4 +1,6 @@
 <h2 class="mb-4">Subcategory List</h2>
+
+<button class="btn btn-primary me-2" (click)="openCreateSubcategoryModal()" >Create Subcategory</button>
 <table class="table table-striped table-hover">
     <thead>
       <tr>
@@ -15,8 +17,8 @@
         <td>{{ subcategory.name }}</td>
         <td>{{ subcategory.created | date:'dd/MM/yyyy' }}</td>
         <td>{{ subcategory.createdBy }}</td>
-        <td>{{ subcategory.lastModified | date:'dd/MM/yyyy' }}</td>
-        <td>{{ subcategory.lastModifiedBy }}</td>
+        <td>{{ subcategory.lastModified ? (subcategory.lastModified | date:'dd/MM/yyyy') : '/' }}</td>
+        <td>{{ subcategory.lastModifiedBy ? subcategory.lastModifiedBy : '/' }}</td>
         <td>
           <!-- <button class="btn btn-primary btn-sm" (click)="editsubcategory(subcategory)">Edit</button>
           <button class="btn btn-danger btn-sm" (click)="deletesubcategory(subcategory)">Delete</button> -->
@@ -24,3 +26,7 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="modal-container">
+    <div #createSubcategoryModal></div>
+  </div>

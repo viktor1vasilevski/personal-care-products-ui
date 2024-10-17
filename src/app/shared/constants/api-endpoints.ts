@@ -11,6 +11,9 @@ export const API_ENDPOINTS = {
     SUBCATEGORY: '/subcategory',
     CATEGORY: '/category',
 
+    
+    CREATE: '/create',
+
     GET_BY_ID: (id: number) => `/GetById/${id}`,
     GET_BY_CATEGORY: (category: string) => `/GetByCategory/${category}`
   };

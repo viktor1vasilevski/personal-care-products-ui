@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { CategoryModalService } from '../../../core/services/modals/category-modal.service';
 
 @Component({
   selector: 'app-category',
@@ -13,7 +15,13 @@ export class CategoryComponent implements OnInit {
 
   categories : any[] = [];
 
-  constructor(private _categoryService: CategoryService) {}
+  @ViewChild('createCategoryModal', { read: ViewContainerRef })
+  createCategoryEntry!: ViewContainerRef;
+  createCategorySub!: Subscription;
+
+  constructor(private _categoryService: CategoryService,
+    private _categoryModalService: CategoryModalService
+  ) {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -32,6 +40,20 @@ export class CategoryComponent implements OnInit {
 
       // this.calculateTotalPages();
     });
+  }
+
+  createCategory() {
+    debugger
+    this.createCategorySub = this._categoryModalService.openModal(this.createCategoryEntry).subscribe((model: any) => {
+      console.log(model);
+      
+      alert();
+      // this._accountService.registerUser(model).subscribe((response: any) => {
+             
+      //   this._toastr.success(`User ${response.userName} registered!`, 'Success', { timeOut: 3000, positionClass: 'toast-bottom-right' });
+      // })
+      
+    })
   }
 
 }

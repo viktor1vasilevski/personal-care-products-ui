@@ -1,4 +1,5 @@
 <h2 class="mb-4">Category List</h2>
+<button class="btn btn-success mb-3" (click)="createCategory()">Create Category</button>
 <table class="table table-striped table-hover">
     <thead>
       <tr>
@@ -11,12 +12,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let categories of categories">
-        <td>{{ categories.name }}</td>
-        <td>{{ categories.created | date:'dd/MM/yyyy' }}</td>
-        <td>{{ categories.createdBy }}</td>
-        <td>{{ categories.lastModified | date:'dd/MM/yyyy' }}</td>
-        <td>{{ categories.lastModifiedBy }}</td>
+      <tr *ngFor="let category of categories">
+        <td>{{ category.name }}</td>
+        <td>{{ category.created | date:'dd/MM/yyyy' }}</td>
+        <td>{{ category.createdBy }}</td>
+        <td>{{ category.lastModified ? (category.lastModified | date:'dd/MM/yyyy') : '/' }}</td>
+        <td>{{ category.lastModifiedBy ? category.lastModifiedBy : '/' }}</td>
         <td>
           <!-- <button class="btn btn-primary btn-sm" (click)="editsubcategory(subcategory)">Edit</button>
           <button class="btn btn-danger btn-sm" (click)="deletesubcategory(subcategory)">Delete</button> -->
@@ -24,3 +25,8 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="modal-container">
+    <div #createCategoryModal></div>
+    <div #editCategoryModal></div>
+  </div>
