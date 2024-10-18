@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { SubcategoryService } from '../../../core/services/subcategory/subcategory.service';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { TestService } from '../../../core/services/modals/test.service';
 
 @Component({
   selector: 'app-subcategory',
@@ -19,8 +18,7 @@ export class SubcategoryComponent implements OnInit {
   createSubcategoryEntry!: ViewContainerRef;
   createSubcategorySub!: Subscription;
 
-  constructor(private _subcategoryService: SubcategoryService,
-    private _test: TestService
+  constructor(private _subcategoryService: SubcategoryService
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +41,8 @@ export class SubcategoryComponent implements OnInit {
   }
 
   openCreateSubcategoryModal() {
-    this.createSubcategorySub = this._test.openModal(this.createSubcategoryEntry).subscribe((data : any) => {
-      
-    })
+    console.log('openCreateSubcategoryModal');
+    
 
     
   }

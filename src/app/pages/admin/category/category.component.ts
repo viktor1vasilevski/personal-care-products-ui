@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { CategoryModalService } from '../../../core/services/modals/category-modal.service';
 import { ToastrService } from 'ngx-toastr';
+import { CategoryModalService } from '../../../core/services/modals/category/category-modal.service';
+import { DeleteCategoryModalComponent } from '../../../core/components/modals/category/delete-category-modal/delete-category-modal.component';
+import { CreateCategoryModalComponent } from '../../../core/components/modals/category/create-category-modal/create-category-modal.component';
 
 @Component({
   selector: 'app-category',
@@ -25,9 +27,13 @@ export class CategoryComponent implements OnInit {
   createCategoryEntry!: ViewContainerRef;
   createCategorySub!: Subscription;
 
+  @ViewChild('deleteCategoryModal', { read: ViewContainerRef })
+  deleteCategoryEntry!: ViewContainerRef;
+  deleteCategorySub!: Subscription;
+
   constructor(private _categoryService: CategoryService,
-    private _categoryModalService: CategoryModalService,
     private _toastr: ToastrService,
+    private _modal: CategoryModalService<any>
   ) {}
 
   ngOnInit(): void {
@@ -91,7 +97,7 @@ export class CategoryComponent implements OnInit {
   }
 
   createCategory() {
-    this.createCategorySub = this._categoryModalService.openModal(this.createCategoryEntry).subscribe((data: any) => {
+    this.createCategorySub = this._modal.openModal(this.createCategoryEntry, CreateCategoryModalComponent).subscribe((data: any) => {
       this._categoryService.createCategory(data).subscribe((response: any) => {
         if(response && response.data) {
           this.loadCategories();
@@ -105,16 +111,17 @@ export class CategoryComponent implements OnInit {
   }
 
   deleteCategory(id: string) {
-    this._categoryService.deleteCategory(id).subscribe((response: any) => {
-      if(response && response.data) {
-        this.loadCategories();
-        this._toastr.success(response.message, 'Success', { timeOut: 3000, positionClass: 'toast-bottom-right' });
-      } else {
-        this._toastr.error(response.message, 'Error', { timeOut: 3000, positionClass: 'toast-bottom-right' });
-      }
-      
-    })
-    
+    this.deleteCategorySub = this._modal.openModal(this.deleteCategoryEntry, DeleteCategoryModalComponent).subscribe((date: any) => {
+      this._categoryService.deleteCategory(id).subscribe((response: any) => {
+        if(response && response.data) {
+          this.loadCategories();
+          this._toastr.success(response.message, 'Success', { timeOut: 3000, positionClass: 'toast-bottom-right' });
+        } else {
+          this._toastr.error(response.message, 'Error', { timeOut: 3000, positionClass: 'toast-bottom-right' });
+        }
+        
+      })
+    })   
   }
 
 }
