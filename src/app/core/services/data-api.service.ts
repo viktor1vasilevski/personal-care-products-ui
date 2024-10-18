@@ -17,9 +17,14 @@ export class DataApiService<T> {
     return this._http.get<T>(`${apiUrl}/${id}`);
   }
 
-  create(apiUrl: string, item: T): Observable<T> {
-    return this._http.post<T>(apiUrl, item);
+  create(apiUrl: string, item: any): Observable<T> {
+    return this._http.post<T>(apiUrl, item, {
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
+  
+  
+  
 
   update(apiUrl: string, id: number, item: T): Observable<T> {
     return this._http.put<T>(`${apiUrl}/${id}`, item);

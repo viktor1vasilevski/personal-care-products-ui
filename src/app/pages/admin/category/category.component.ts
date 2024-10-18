@@ -3,6 +3,7 @@ import { CategoryService } from '../../../core/services/category/category.servic
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { CategoryModalService } from '../../../core/services/modals/category-modal.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category',
@@ -20,7 +21,8 @@ export class CategoryComponent implements OnInit {
   createCategorySub!: Subscription;
 
   constructor(private _categoryService: CategoryService,
-    private _categoryModalService: CategoryModalService
+    private _categoryModalService: CategoryModalService,
+    private _toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -42,16 +44,22 @@ export class CategoryComponent implements OnInit {
     });
   }
 
+  changePage(page: number): void {
+    // this.currentPage = page;
+    // this.skip = (page - 1) * this.itemsPerPage;
+    // this.loadProducts();
+  }
+
   createCategory() {
-    debugger
-    this.createCategorySub = this._categoryModalService.openModal(this.createCategoryEntry).subscribe((model: any) => {
-      console.log(model);
-      
-      alert();
-      // this._accountService.registerUser(model).subscribe((response: any) => {
-             
-      //   this._toastr.success(`User ${response.userName} registered!`, 'Success', { timeOut: 3000, positionClass: 'toast-bottom-right' });
-      // })
+    this.createCategorySub = this._categoryModalService.openModal(this.createCategoryEntry).subscribe((data: any) => {
+      this._categoryService.createCategory(data).subscribe((response: any) => {
+        if(response && response.data) {
+          this.categories.push(response.data);
+          this._toastr.success(response.message, 'Success', { timeOut: 3000, positionClass: 'toast-bottom-right' });
+        } else {
+          this._toastr.error(response.message, 'Error', { timeOut: 3000, positionClass: 'toast-bottom-right' });
+        }
+      })
       
     })
   }
