@@ -25,6 +25,10 @@ export class CategoryService {
     return this._dataApiService.create(url, categoryData);  // Pass categoryData as an object
   }
   
+  deleteCategory(id: string): Observable<any> {
+    const url = `${this.baseUrl}${API_ENDPOINTS.CATEGORY}${API_ENDPOINTS.DELETE}/${id}`;
+    return this._dataApiService.delete(url);
+  }
   
   
 }

@@ -13,6 +13,7 @@ export const API_ENDPOINTS = {
 
     
     CREATE: '/create',
+    DELETE: '/delete',
 
     GET_BY_ID: (id: number) => `/GetById/${id}`,
     GET_BY_CATEGORY: (category: string) => `/GetByCategory/${category}`

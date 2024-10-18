@@ -9,8 +9,8 @@ export class DataApiService<T> {
 
   constructor(private _http: HttpClient) {}
 
-  getAll(url: string, params?: HttpParams): Observable<T[]> {
-    return this._http.get<T[]>(url, { params });
+  getAll(apiUrl: string, params?: HttpParams): Observable<T[]> {
+    return this._http.get<T[]>(apiUrl, { params });
   }
 
   getById(apiUrl: string, id: number): Observable<T> {
@@ -23,14 +23,12 @@ export class DataApiService<T> {
     });
   }
   
-  
-  
-
   update(apiUrl: string, id: number, item: T): Observable<T> {
     return this._http.put<T>(`${apiUrl}/${id}`, item);
   }
 
-  delete(apiUrl: string, id: number): Observable<void> {
-    return this._http.delete<void>(`${apiUrl}/${id}`);
+  delete(apiUrl: string): Observable<T> {
+    return this._http.delete<T>(apiUrl);
   }
+  
 }
