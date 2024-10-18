@@ -17,7 +17,7 @@
               <li><a class="dropdown-item" routerLink="/soaps/beard">Beard</a></li>
             </ul>
           </li>
-  
+        
           <li *ngIf="user?.role === 'Admin'" class="nav-item dropdown">
             <a class="nav-link active" aria-current="page" routerLink="/admin/product">Product</a>
           </li>
@@ -28,6 +28,7 @@
             <a class="nav-link active" aria-current="page" routerLink="/admin/category">Category</a>
           </li>
         </ul>
+        
         <div class="d-flex align-items-center">
             <span *ngIf="isLoggedIn" class="me-3">Username : {{ user?.username }} | Role : {{ user?.role }}</span>
             <button *ngIf="isLoggedIn" class="btn btn-outline-danger me-2" (click)="logout()" >Logout</button>

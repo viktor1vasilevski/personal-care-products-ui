@@ -3,9 +3,9 @@ import { CategoryService } from '../../../core/services/category/category.servic
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { CategoryModalService } from '../../../core/services/modals/category/category-modal.service';
 import { DeleteCategoryModalComponent } from '../../../core/components/modals/category/delete-category-modal/delete-category-modal.component';
 import { CreateCategoryModalComponent } from '../../../core/components/modals/category/create-category-modal/create-category-modal.component';
+import { ModalService } from '../../../core/services/modals/modal.service';
 
 @Component({
   selector: 'app-category',
@@ -33,7 +33,7 @@ export class CategoryComponent implements OnInit {
 
   constructor(private _categoryService: CategoryService,
     private _toastr: ToastrService,
-    private _modal: CategoryModalService<any>
+    private _modalService: ModalService<any>
   ) {}
 
   ngOnInit(): void {
@@ -97,7 +97,7 @@ export class CategoryComponent implements OnInit {
   }
 
   createCategory() {
-    this.createCategorySub = this._modal.openModal(this.createCategoryEntry, CreateCategoryModalComponent).subscribe((data: any) => {
+    this.createCategorySub = this._modalService.openModal(this.createCategoryEntry, CreateCategoryModalComponent).subscribe((data: any) => {
       this._categoryService.createCategory(data).subscribe((response: any) => {
         if(response && response.data) {
           this.loadCategories();
@@ -111,7 +111,7 @@ export class CategoryComponent implements OnInit {
   }
 
   deleteCategory(id: string) {
-    this.deleteCategorySub = this._modal.openModal(this.deleteCategoryEntry, DeleteCategoryModalComponent).subscribe((date: any) => {
+    this.deleteCategorySub = this._modalService.openModal(this.deleteCategoryEntry, DeleteCategoryModalComponent).subscribe((date: any) => {
       this._categoryService.deleteCategory(id).subscribe((response: any) => {
         if(response && response.data) {
           this.loadCategories();

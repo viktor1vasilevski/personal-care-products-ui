@@ -4,7 +4,7 @@ export const API_ENDPOINTS = {
     ACCOUNT: '/account',
     LOGIN_USER: '/LoginUser',
     LOGOUT_USER: '/LogoutUser',
-    REGISTER: '/register',
+    REGISTER: '/registerUser',
 
 
 

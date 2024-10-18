@@ -8,6 +8,9 @@ import { AccountService } from '../../services/account/account.service';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from '../../services/modals/register.service';
+import { ModalService } from '../../services/modals/modal.service';
+import { RegisterComponent } from '../modals/register/register.component';
+import { LoginComponent } from '../modals/login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +37,8 @@ export class HeaderComponent implements OnInit {
     private _accountService: AccountService,
     private _toastr: ToastrService,
     private _router: Router,
-    private _registerService: RegisterService
+    private _registerService: RegisterService,
+    private _modalService: ModalService<any>
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +46,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openLoginModal() {
-    this.loginSub = this._loginService.openModal(this.loginEntry).subscribe((data: any) => {
+    this.loginSub = this._modalService.openModal(this.loginEntry, LoginComponent).subscribe((data: any) => {
       this._accountService.loginUser(data).subscribe((response: any) => {
         if(response.success) {
           const token = response.data.token; 
@@ -86,7 +90,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openRegisterModal() {
-    this.registerSub = this._registerService.openModal(this.registerEntry).subscribe((model) => {
+    this.registerSub = this._modalService.openModal(this.registerEntry, RegisterComponent).subscribe((model) => {
       this._accountService.registerUser(model).subscribe((response: any) => {
              
         this._toastr.success(`User ${response.userName} registered!`, 'Success', { timeOut: 3000, positionClass: 'toast-bottom-right' });
