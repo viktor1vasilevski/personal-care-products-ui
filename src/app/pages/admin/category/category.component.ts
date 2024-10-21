@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 import { DeleteCategoryModalComponent } from '../../../core/components/modals/category/delete-category-modal/delete-category-modal.component';
 import { CreateCategoryModalComponent } from '../../../core/components/modals/category/create-category-modal/create-category-modal.component';
 import { ModalService } from '../../../core/services/modals/modal.service';
+import { ToastrNotificationService } from '../../../core/services/toastr-notification.service';
 
 @Component({
   selector: 'app-category',
@@ -32,7 +32,7 @@ export class CategoryComponent implements OnInit {
   deleteCategorySub!: Subscription;
 
   constructor(private _categoryService: CategoryService,
-    private _toastr: ToastrService,
+    private _toastrNotification: ToastrNotificationService,
     private _modalService: ModalService<any>
   ) {}
 
@@ -101,9 +101,9 @@ export class CategoryComponent implements OnInit {
       this._categoryService.createCategory(data).subscribe((response: any) => {
         if(response && response.data) {
           this.loadCategories();
-          this._toastr.success(response.message, 'Success', { timeOut: 3000, positionClass: 'toast-bottom-right' });
+          this._toastrNotification.showNotification(response);
         } else {
-          this._toastr.error(response.message, 'Error', { timeOut: 3000, positionClass: 'toast-bottom-right' });
+          this._toastrNotification.showNotification(response);
         }
       })
       
@@ -115,9 +115,9 @@ export class CategoryComponent implements OnInit {
       this._categoryService.deleteCategory(id).subscribe((response: any) => {
         if(response && response.data) {
           this.loadCategories();
-          this._toastr.success(response.message, 'Success', { timeOut: 3000, positionClass: 'toast-bottom-right' });
+          this._toastrNotification.showNotification(response);
         } else {
-          this._toastr.error(response.message, 'Error', { timeOut: 3000, positionClass: 'toast-bottom-right' });
+          this._toastrNotification.showNotification(response);
         }
         
       })
