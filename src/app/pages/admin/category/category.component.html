@@ -20,6 +20,7 @@
         <td>{{ category.lastModifiedBy ? category.lastModifiedBy : '/' }}</td>
         <td>
           <!-- <button class="btn btn-primary btn-sm" (click)="editsubcategory(subcategory)">Edit</button> -->
+          <button class="btn btn-primary btn-sm" (click)="detailsCategory(category.id)">Details</button> |
           <button class="btn btn-danger btn-sm" (click)="deleteCategory(category.id)">Delete</button>
         </td>
       </tr>

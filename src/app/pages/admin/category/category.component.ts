@@ -110,6 +110,13 @@ export class CategoryComponent implements OnInit {
     })
   }
 
+  detailsCategory(id: string) {
+    this._categoryService.getByIdCategory(id).subscribe((response: any) => {
+      console.log(response);
+      
+    })
+  }
+
   deleteCategory(id: string) {
     this.deleteCategorySub = this._modalService.openModal(this.deleteCategoryEntry, DeleteCategoryModalComponent).subscribe((date: any) => {
       this._categoryService.deleteCategory(id).subscribe((response: any) => {

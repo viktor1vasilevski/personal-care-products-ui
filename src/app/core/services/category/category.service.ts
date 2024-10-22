@@ -29,6 +29,11 @@ export class CategoryService {
     const url = `${this.baseUrl}${API_ENDPOINTS.CATEGORY}${API_ENDPOINTS.DELETE}/${id}`;
     return this._dataApiService.delete(url);
   }
+
+  getByIdCategory(id: string): Observable<any> {
+    const url = `${this.baseUrl}${API_ENDPOINTS.CATEGORY}${API_ENDPOINTS.GET_BY_ID}`;
+    return this._dataApiService.getById(url, id);
+  }
   
   
 }

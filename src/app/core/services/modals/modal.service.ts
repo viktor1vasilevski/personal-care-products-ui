@@ -1,18 +1,19 @@
 import { Injectable, ComponentRef, ViewContainerRef } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { IModalComponent } from '../../../models/modal.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService<T> {
 
-  private componentRef!: ComponentRef<T>;
+  private componentRef!: ComponentRef<IModalComponent>;
   private componentSubscriber!: Subject<any>;
 
   constructor() {}
 
   // Use a generic modal handler that takes any component type (T) as a parameter
-  openModal(entry: ViewContainerRef, component: new (...args: any[]) => T): Observable<any> {
+  openModal(entry: ViewContainerRef, component: new (...args: any[]) => IModalComponent): Observable<any> {
     this.componentRef = entry.createComponent(component);
 
     // Assuming the component has "closeMeEvent" and "confirmEvent"

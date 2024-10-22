@@ -13,7 +13,7 @@ export class DataApiService<T> {
     return this._http.get<T[]>(apiUrl, { params });
   }
 
-  getById(apiUrl: string, id: number): Observable<T> {
+  getById(apiUrl: string, id: string): Observable<T> {
     return this._http.get<T>(`${apiUrl}/${id}`);
   }
 
