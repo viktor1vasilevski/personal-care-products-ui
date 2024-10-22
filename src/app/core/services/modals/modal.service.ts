@@ -7,18 +7,26 @@ import { IModalComponent } from '../../../models/modal.interface';
 })
 export class ModalService<T> {
 
-  private componentRef!: ComponentRef<IModalComponent>;
+  private componentRef!: ComponentRef<any>;
   private componentSubscriber!: Subject<any>;
 
   constructor() {}
 
   // Use a generic modal handler that takes any component type (T) as a parameter
-  openModal(entry: ViewContainerRef, component: new (...args: any[]) => IModalComponent): Observable<any> {
+  openModal(entry: ViewContainerRef, component: new (...args: any[]) => any, data?: any): Observable<any> {
     this.componentRef = entry.createComponent(component);
 
+    if (data) {
+      (this.componentRef.instance as any).data = data;  // Set the data on the instance
+      (this.componentRef.instance as any).closeMeEvent.subscribe(() => this.closeModal());
+    } else {
+      (this.componentRef.instance as any).closeMeEvent.subscribe(() => this.closeModal());
+      (this.componentRef.instance as any).confirmEvent.subscribe((response: any) => this.confirm(response));
+    }
+
     // Assuming the component has "closeMeEvent" and "confirmEvent"
-    (this.componentRef.instance as any).closeMeEvent.subscribe(() => this.closeModal());
-    (this.componentRef.instance as any).confirmEvent.subscribe((response: any) => this.confirm(response));
+
+
 
     // Initialize the Subject and return as Observable
     this.componentSubscriber = new Subject<any>();

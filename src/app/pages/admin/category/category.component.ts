@@ -6,6 +6,7 @@ import { DeleteCategoryModalComponent } from '../../../core/components/modals/ca
 import { CreateCategoryModalComponent } from '../../../core/components/modals/category/create-category-modal/create-category-modal.component';
 import { ModalService } from '../../../core/services/modals/modal.service';
 import { ToastrNotificationService } from '../../../core/services/toastr-notification.service';
+import { DetailsCategoryModalComponent } from '../../../core/components/modals/category/details-category-modal/details-category-modal.component';
 
 @Component({
   selector: 'app-category',
@@ -30,6 +31,10 @@ export class CategoryComponent implements OnInit {
   @ViewChild('deleteCategoryModal', { read: ViewContainerRef })
   deleteCategoryEntry!: ViewContainerRef;
   deleteCategorySub!: Subscription;
+
+  @ViewChild('detailsCategoryModal', { read: ViewContainerRef })
+  detailsCategoryEntry!: ViewContainerRef;
+  detailsCategorySub!: Subscription;
 
   constructor(private _categoryService: CategoryService,
     private _toastrNotification: ToastrNotificationService,
@@ -112,7 +117,13 @@ export class CategoryComponent implements OnInit {
 
   detailsCategory(id: string) {
     this._categoryService.getByIdCategory(id).subscribe((response: any) => {
-      console.log(response);
+      if(response && response.data) {
+        this.detailsCategorySub = this._modalService.openModal(this.detailsCategoryEntry, DetailsCategoryModalComponent, response.data).subscribe((data: any) => {
+          alert()
+          
+        })
+      }
+
       
     })
   }
