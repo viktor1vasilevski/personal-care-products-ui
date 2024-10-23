@@ -1,0 +1,40 @@
+<div class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-card">
+        <h4 class="modal-title">Subcategory Details</h4>
+        <hr>
+        <div class="modal-body row">
+          <div class="col-12">
+            <div class="detail-item">
+              <strong>Name:</strong> {{ data?.name }}
+            </div>
+            <div class="detail-item">
+              <strong>Created:</strong> {{ data?.created | date: 'medium' }}
+            </div>
+            <div class="detail-item">
+              <strong>Created By:</strong> {{ data?.createdBy }}
+            </div>
+            <div class="detail-item" *ngIf="data?.modified">
+              <strong>Modified:</strong> {{ data?.modified | date: 'medium' }}
+            </div>
+            <div class="detail-item" *ngIf="data?.modifiedBy">
+              <strong>Modified By:</strong> {{ data?.modifiedBy }}
+            </div>
+            <div class="detail-item" *ngIf="data?.subcategories?.length > 0">
+              <strong>Subcategories:</strong>
+              <ul class="subcategory-list">
+                <li *ngFor="let subcategory of data?.subcategories">{{ subcategory }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="modal-footer row">
+          <div class="col-12 text-right">
+            <button class="btn btn-secondary" (click)="closeMe()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

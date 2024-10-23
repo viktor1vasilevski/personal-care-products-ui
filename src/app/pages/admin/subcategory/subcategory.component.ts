@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { SubcategoryService } from '../../../core/services/subcategory/subcategory.service';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { ModalService } from '../../../core/services/modals/modal.service';
+import { DetailsSubcategoryModalComponent } from '../../../core/components/modals/subcategory/details-subcategory-modal/details-subcategory-modal.component';
 
 @Component({
   selector: 'app-subcategory',
@@ -18,8 +20,13 @@ export class SubcategoryComponent implements OnInit {
   createSubcategoryEntry!: ViewContainerRef;
   createSubcategorySub!: Subscription;
 
-  constructor(private _subcategoryService: SubcategoryService
-  ) {}
+  @ViewChild('detailsSubcategoryModal', { read: ViewContainerRef })
+  detailsSubcategoryEntry!: ViewContainerRef;
+  detailsSubcategorySub!: Subscription;
+
+  constructor(private _subcategoryService: SubcategoryService,
+    private _modalService: ModalService<any>
+  ) { }
 
   ngOnInit(): void {
     this.loadSubcategories();
@@ -38,6 +45,19 @@ export class SubcategoryComponent implements OnInit {
 
       // this.calculateTotalPages();
     });
+  }
+
+  detailsSubcategory(id: string) {
+    this._subcategoryService.getByIdSubcategory(id).subscribe((response: any) => {
+      if(response && response.data) {
+        this.detailsSubcategorySub = this._modalService.openModal(this.detailsSubcategoryEntry, DetailsSubcategoryModalComponent, response.data).subscribe((data: any) => {
+          alert()
+          
+        })
+      }
+      
+    })
+    
   }
 
   openCreateSubcategoryModal() {

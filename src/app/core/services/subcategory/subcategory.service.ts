@@ -19,4 +19,9 @@ export class SubcategoryService {
     const url = `${this.baseUrl}${API_ENDPOINTS.SUBCATEGORY}${API_ENDPOINTS.GET}`;
     return this._dataApiService.getAll(url, params);
   }
+
+  getByIdSubcategory(id: string): Observable<any> {
+    const url = `${this.baseUrl}${API_ENDPOINTS.SUBCATEGORY}${API_ENDPOINTS.GET_BY_ID}`;
+    return this._dataApiService.getById(url, id);
+  }
 }
