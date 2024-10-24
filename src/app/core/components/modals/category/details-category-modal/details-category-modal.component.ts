@@ -8,17 +8,11 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   templateUrl: './details-category-modal.component.html',
   styleUrl: './details-category-modal.component.css'
 })
-export class DetailsCategoryModalComponent implements OnInit {
-
+export class DetailsCategoryModalComponent {
 
   @Output() closeMeEvent = new EventEmitter();
 
   data: any;
-
-  ngOnInit(): void {
-    console.log(this.data);
-    
-  }
 
   closeMe() {
     this.closeMeEvent.emit();

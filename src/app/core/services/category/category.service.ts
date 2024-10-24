@@ -22,7 +22,7 @@ export class CategoryService {
 
   createCategory(categoryData: { name: string }): Observable<any> {
     const url = `${this.baseUrl}${API_ENDPOINTS.CATEGORY}${API_ENDPOINTS.CREATE}`;
-    return this._dataApiService.create(url, categoryData);  // Pass categoryData as an object
+    return this._dataApiService.create(url, categoryData);
   }
   
   deleteCategory(id: string): Observable<any> {
@@ -30,10 +30,16 @@ export class CategoryService {
     return this._dataApiService.delete(url);
   }
 
-  getByIdCategory(id: string): Observable<any> {
+  getCategoryById(id: string): Observable<any> {
     const url = `${this.baseUrl}${API_ENDPOINTS.CATEGORY}${API_ENDPOINTS.GET_BY_ID}`;
     return this._dataApiService.getById(url, id);
   }
+
+  updateCategory(id: string, categoryData: { name: string }): Observable<any> {
+    const url = `${this.baseUrl}${API_ENDPOINTS.CATEGORY}${API_ENDPOINTS.UPDATE}/${id}`;
+    return this._dataApiService.update(url, categoryData);
+  }
+  
   
   
 }

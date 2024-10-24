@@ -13,6 +13,7 @@ export const API_ENDPOINTS = {
 
     
     CREATE: '/create',
+    UPDATE:'/update',
     DELETE: '/delete',
     GET_BY_ID: '/getById',
 

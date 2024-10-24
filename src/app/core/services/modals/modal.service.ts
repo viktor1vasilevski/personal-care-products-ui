@@ -19,6 +19,7 @@ export class ModalService<T> {
     if (data) {
       (this.componentRef.instance as any).data = data;  // Set the data on the instance
       (this.componentRef.instance as any).closeMeEvent.subscribe(() => this.closeModal());
+      (this.componentRef.instance as any).confirmEvent.subscribe((response: any) => this.confirm(response));
     } else {
       (this.componentRef.instance as any).closeMeEvent.subscribe(() => this.closeModal());
       (this.componentRef.instance as any).confirmEvent.subscribe((response: any) => this.confirm(response));

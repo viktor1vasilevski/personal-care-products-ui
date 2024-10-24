@@ -23,9 +23,10 @@ export class DataApiService<T> {
     });
   }
   
-  update(apiUrl: string, id: number, item: T): Observable<T> {
-    return this._http.put<T>(`${apiUrl}/${id}`, item);
+  update(apiUrl: string, item: T): Observable<T> {
+    return this._http.put<T>(apiUrl, item);
   }
+  
 
   delete(apiUrl: string): Observable<T> {
     return this._http.delete<T>(apiUrl);

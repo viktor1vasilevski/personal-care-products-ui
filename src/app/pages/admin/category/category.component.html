@@ -19,9 +19,9 @@
         <td>{{ category.lastModified ? (category.lastModified | date:'dd/MM/yyyy') : '/' }}</td>
         <td>{{ category.lastModifiedBy ? category.lastModifiedBy : '/' }}</td>
         <td>
-          <!-- <button class="btn btn-primary btn-sm" (click)="editsubcategory(subcategory)">Edit</button> -->
-          <button class="btn btn-primary btn-sm" (click)="detailsCategory(category.id)">Details</button> |
-          <button class="btn btn-danger btn-sm" (click)="deleteCategory(category.id)">Delete</button>
+          <button class="btn btn-info btn-sm" (click)="detailsCategory(category.id)">Details</button> |
+          <button class="btn btn-primary btn-sm" (click)="updateCategory(category)">Edit</button> |
+          <button class="btn btn-danger btn-sm" (click)="deleteCategory(category)">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -63,6 +63,6 @@
   <div class="modal-container">
     <div #createCategoryModal></div>
     <div #deleteCategoryModal></div>
-    <div #editCategoryModal></div>
+    <div #updateCategoryModal></div>
     <div #detailsCategoryModal></div>
   </div>

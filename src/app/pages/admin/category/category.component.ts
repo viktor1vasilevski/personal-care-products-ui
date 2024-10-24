@@ -7,6 +7,8 @@ import { CreateCategoryModalComponent } from '../../../core/components/modals/ca
 import { ModalService } from '../../../core/services/modals/modal.service';
 import { ToastrNotificationService } from '../../../core/services/toastr-notification.service';
 import { DetailsCategoryModalComponent } from '../../../core/components/modals/category/details-category-modal/details-category-modal.component';
+import { UpdateCategoryModalComponent } from '../../../core/components/modals/category/update-category-modal/update-category-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category',
@@ -36,8 +38,13 @@ export class CategoryComponent implements OnInit {
   detailsCategoryEntry!: ViewContainerRef;
   detailsCategorySub!: Subscription;
 
+  @ViewChild('updateCategoryModal', { read: ViewContainerRef })
+  updateCategoryEntry!: ViewContainerRef;
+  updateCategorySub!: Subscription;
+
   constructor(private _categoryService: CategoryService,
     private _toastrNotification: ToastrNotificationService,
+    private tos: ToastrService,
     private _modalService: ModalService<any>
   ) {}
 
@@ -46,7 +53,6 @@ export class CategoryComponent implements OnInit {
   }
 
   loadCategories() {
-    // const { category, subCategory } = this.filterForm.value;
     this._categoryService.getCategories({ skip: this.skip, take: this.itemsPerPage }).subscribe((response: any) => {
       if (response && response.data) {
         this.categories = response.data;
@@ -116,21 +122,33 @@ export class CategoryComponent implements OnInit {
   }
 
   detailsCategory(id: string) {
-    this._categoryService.getByIdCategory(id).subscribe((response: any) => {
+    this._categoryService.getCategoryById(id).subscribe((response: any) => {
       if(response && response.data) {
         this.detailsCategorySub = this._modalService.openModal(this.detailsCategoryEntry, DetailsCategoryModalComponent, response.data).subscribe((data: any) => {
-          alert()
           
         })
       }
-
-      
     })
   }
 
-  deleteCategory(id: string) {
-    this.deleteCategorySub = this._modalService.openModal(this.deleteCategoryEntry, DeleteCategoryModalComponent).subscribe((date: any) => {
-      this._categoryService.deleteCategory(id).subscribe((response: any) => {
+  updateCategory(category: any) {
+    this.updateCategorySub = this._modalService.openModal(this.updateCategoryEntry, UpdateCategoryModalComponent, category).subscribe((data: any) => {
+      if(data) {
+        this._categoryService.updateCategory(category.id, data).subscribe((response: any) => {
+          if(response && response.data) {
+            this.loadCategories();
+            this._toastrNotification.showNotification(response);
+          } else {
+            this._toastrNotification.showNotification(response);
+          }      
+        })
+      }
+    })
+  }
+
+  deleteCategory(category: any) {
+    this.deleteCategorySub = this._modalService.openModal(this.deleteCategoryEntry, DeleteCategoryModalComponent, category).subscribe(() => {
+      this._categoryService.deleteCategory(category.id).subscribe((response: any) => {
         if(response && response.data) {
           this.loadCategories();
           this._toastrNotification.showNotification(response);
@@ -139,7 +157,8 @@ export class CategoryComponent implements OnInit {
         }
         
       })
-    })   
+    })
+    
   }
 
 }

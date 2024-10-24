@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CreateCategoryModel } from '../../category-modal/create-category.model';
 
 @Component({
   selector: 'app-create-category-modal',
@@ -35,7 +34,7 @@ export class CreateCategoryModalComponent {
   confirm() { 
     if (this.createCategoryForm.valid) {
       const { name } = this.createCategoryForm.value;
-      const createCategoryData: CreateCategoryModel = { name };
+      const createCategoryData: any = { name };
       
       this.confirmEvent.emit(createCategoryData);
     }
