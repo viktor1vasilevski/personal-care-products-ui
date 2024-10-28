@@ -1,22 +1,34 @@
 <h2 class="mb-4">Category List</h2>
-<button class="btn btn-primary mb-3" (click)="createCategory()">Create Category</button>
+<div class="d-flex mb-3">
+  <!-- Create Category Button -->
+  <button class="btn btn-primary" (click)="createCategory()">Create Category</button>
+</div>
 <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th>Name</th>
-        <th>Created</th>
+        <th (click)="toggleSortOrder()" style="cursor: pointer;">
+          Created 
+          <i [ngClass]="sortOrder === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+        </th>
         <th>Created By</th>
         <th>Last Modified</th>
         <th>Last Modified By</th>
         <th>Actions</th>
       </tr>
+      <tr>
+        <th>
+          <input type="text" [(ngModel)]="nameFilter" (input)="onNameChange()" class="form-control" placeholder="Filter by name" />
+      </th>
+        <th colspan="5"></th>
+      </tr>
     </thead>
     <tbody>
       <tr *ngFor="let category of categories">
         <td>{{ category.name }}</td>
-        <td>{{ category.created | date:'dd/MM/yyyy' }}</td>
+        <td>{{ category.created | date:'dd/MM/yyyy HH:mm:ss' }}</td>
         <td>{{ category.createdBy }}</td>
-        <td>{{ category.lastModified ? (category.lastModified | date:'dd/MM/yyyy') : '/' }}</td>
+        <td>{{ category.lastModified ? (category.lastModified | date:'dd/MM/yyyy HH:mm:ss') : '/' }}</td>
         <td>{{ category.lastModifiedBy ? category.lastModifiedBy : '/' }}</td>
         <td>
           <button class="btn btn-info btn-sm" (click)="detailsCategory(category.id)">Details</button> |

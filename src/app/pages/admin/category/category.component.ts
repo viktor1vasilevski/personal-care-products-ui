@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -8,16 +8,16 @@ import { ModalService } from '../../../core/services/modals/modal.service';
 import { ToastrNotificationService } from '../../../core/services/toastr-notification.service';
 import { DetailsCategoryModalComponent } from '../../../core/components/modals/category/details-category-modal/details-category-modal.component';
 import { UpdateCategoryModalComponent } from '../../../core/components/modals/category/update-category-modal/update-category-modal.component';
-import { ToastrService } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [ CommonModule ],
+  imports: [ CommonModule, FormsModule ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css'
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit, OnDestroy {
 
   categories : any[] = [];
   totalCount: number = 0;
@@ -25,6 +25,9 @@ export class CategoryComponent implements OnInit {
   itemsPerPage : number = 5;
   currentPage = 1;
   totalPages: number[] = [];
+  nameFilter: string = '';
+  sortOrder: string = 'desc';
+  filteredCategories: any[] = [];
 
   @ViewChild('createCategoryModal', { read: ViewContainerRef })
   createCategoryEntry!: ViewContainerRef;
@@ -44,16 +47,21 @@ export class CategoryComponent implements OnInit {
 
   constructor(private _categoryService: CategoryService,
     private _toastrNotification: ToastrNotificationService,
-    private tos: ToastrService,
     private _modalService: ModalService<any>
   ) {}
+
 
   ngOnInit(): void {
     this.loadCategories();
   }
 
   loadCategories() {
-    this._categoryService.getCategories({ skip: this.skip, take: this.itemsPerPage }).subscribe((response: any) => {
+    this._categoryService.getCategories({
+      skip: this.skip,
+      take: this.itemsPerPage,
+      sort: this.sortOrder,
+      name: this.nameFilter
+    }).subscribe((response: any) => {
       if (response && response.data) {
         this.categories = response.data;
       } else {
@@ -124,7 +132,7 @@ export class CategoryComponent implements OnInit {
   detailsCategory(id: string) {
     this._categoryService.getCategoryById(id).subscribe((response: any) => {
       if(response && response.data) {
-        this.detailsCategorySub = this._modalService.openModal(this.detailsCategoryEntry, DetailsCategoryModalComponent, response.data).subscribe((data: any) => {
+        this.detailsCategorySub = this._modalService.openModal(this.detailsCategoryEntry, DetailsCategoryModalComponent, response.data).subscribe(() => {
           
         })
       }
@@ -154,11 +162,26 @@ export class CategoryComponent implements OnInit {
           this._toastrNotification.showNotification(response);
         } else {
           this._toastrNotification.showNotification(response);
-        }
-        
+        }  
       })
     })
-    
+  }
+
+  onNameChange() {
+    this.skip = 0;
+    this.loadCategories();
+  }
+
+  toggleSortOrder() {
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    this.loadCategories();
+  }
+
+  ngOnDestroy(): void {
+    this.createCategorySub?.unsubscribe();
+    this.deleteCategorySub?.unsubscribe();
+    this.detailsCategorySub?.unsubscribe();
+    this.updateCategorySub?.unsubscribe();
   }
 
 }
