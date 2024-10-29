@@ -7,6 +7,7 @@ import { RESOURCE_PATH } from '../../../shared/constants/endpoints/resource-path
 import { API_ENDPOINTS } from '../../../shared/constants/endpoints/api-endpoints';
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { Category } from '../../../models/category/category.model';
+import { SingleResponse } from '../../../models/responses/single-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class CategoryService {
     return this._dataApiService.create(url, categoryData);
   }
   
-  deleteCategory(id: string): Observable<any> {
+  deleteCategory(id: string): Observable<SingleResponse<Category>> {
     const url = `${this.baseUrl}/${RESOURCE_PATH.CATEGORY}/${API_ENDPOINTS.DELETE}/${id}`;
     return this._dataApiService.delete(url);
   }

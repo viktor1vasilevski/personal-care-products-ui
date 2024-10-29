@@ -11,6 +11,7 @@ import { UpdateCategoryModalComponent } from '../../../core/components/modals/ca
 import { FormsModule } from '@angular/forms';
 import { Category } from '../../../models/category/category.model';
 import { QueryResponse } from '../../../models/responses/query-response.model';
+import { SingleResponse } from '../../../models/responses/single-response.model';
 
 @Component({
   selector: 'app-category',
@@ -119,8 +120,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   createCategory() {
     this.createCategorySub = this._modalService.openModal(this.createCategoryEntry, CreateCategoryModalComponent, null, true).subscribe((data: any) => {
-      this._categoryService.createCategory(data).subscribe((response: any) => {
-        if(response && response.data) {
+      this._categoryService.createCategory(data).subscribe((response: SingleResponse<Category>) => {
+        if(response && response.success && response.data) {
           this.loadCategories();
           this._toastrNotification.showNotification(response);
         } else {
@@ -132,11 +133,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   detailsCategory(id: string) {
-    this._categoryService.getCategoryById(id).subscribe((response: any) => {
-      if(response && response.data) {
-        this.detailsCategorySub = this._modalService.openModal(this.detailsCategoryEntry, DetailsCategoryModalComponent, response.data, false).subscribe(() => {
-          
-        })
+    this._categoryService.getCategoryById(id).subscribe((response: SingleResponse<Category>) => {
+      if(response && response.success && response.data) {
+        this.detailsCategorySub = this._modalService.openModal(this.detailsCategoryEntry, DetailsCategoryModalComponent, response.data, false).subscribe(() => { })
       }
     })
   }
@@ -144,8 +143,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
   updateCategory(category: any) {
     this.updateCategorySub = this._modalService.openModal(this.updateCategoryEntry, UpdateCategoryModalComponent, category, true).subscribe((data: any) => {
       if(data) {
-        this._categoryService.updateCategory(category.id, data).subscribe((response: any) => {
-          if(response && response.data) {
+        this._categoryService.updateCategory(category.id, data).subscribe((response: SingleResponse<Category>) => {
+          if(response && response.success && response.data) {
             this.loadCategories();
             this._toastrNotification.showNotification(response);
           } else {
@@ -158,8 +157,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   deleteCategory(category: any) {
     this.deleteCategorySub = this._modalService.openModal(this.deleteCategoryEntry, DeleteCategoryModalComponent, category, true).subscribe(() => {
-      this._categoryService.deleteCategory(category.id).subscribe((response: any) => {
-        if(response && response.data) {
+      this._categoryService.deleteCategory(category.id).subscribe((response: SingleResponse<Category>) => {
+        debugger
+        if(response && response.success && response.data) {
           this.loadCategories();
           this._toastrNotification.showNotification(response);
         } else {
