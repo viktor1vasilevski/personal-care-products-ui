@@ -9,6 +9,8 @@ import { ToastrNotificationService } from '../../../core/services/toastr-notific
 import { DetailsCategoryModalComponent } from '../../../core/components/modals/category/details-category-modal/details-category-modal.component';
 import { UpdateCategoryModalComponent } from '../../../core/components/modals/category/update-category-modal/update-category-modal.component';
 import { FormsModule } from '@angular/forms';
+import { Category } from '../../../models/category/category.model';
+import { QueryResponse } from '../../../models/responses/query-response.model';
 
 @Component({
   selector: 'app-category',
@@ -19,7 +21,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
 
-  categories : any[] = [];
+  categories: Category[] = [];
   totalCount: number = 0;
   skip: number = 0;
   itemsPerPage : number = 5;
@@ -27,7 +29,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   totalPages: number[] = [];
   nameFilter: string = '';
   sortOrder: string = 'desc';
-  filteredCategories: any[] = [];
+
 
   @ViewChild('createCategoryModal', { read: ViewContainerRef })
   createCategoryEntry!: ViewContainerRef;
@@ -61,8 +63,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
       take: this.itemsPerPage,
       sort: this.sortOrder,
       name: this.nameFilter
-    }).subscribe((response: any) => {
-      if (response && response.data) {
+    }).subscribe((response: QueryResponse<Category[]>) => {
+      if (response && response.data && response.success) {
         this.categories = response.data;
       } else {
         this.categories = [];
