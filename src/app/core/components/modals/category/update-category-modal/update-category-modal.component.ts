@@ -24,8 +24,6 @@ export class UpdateCategoryModalComponent {
   }
 
   ngOnInit() {
-    debugger
-    // Pre-populate the form with the existing category data
     if (this.data) {
       this.updateCategoryForm.patchValue({
         name: this.data.name
@@ -42,12 +40,11 @@ export class UpdateCategoryModalComponent {
   }
 
   confirm() { 
-    debugger
     if (this.updateCategoryForm.valid) {
       const { name } = this.updateCategoryForm.value;
       const updatedCategoryData: any = { name };
       
-      this.confirmEvent.emit(updatedCategoryData);  // Emit the updated category data
+      this.confirmEvent.emit(updatedCategoryData);
     }
   }
 

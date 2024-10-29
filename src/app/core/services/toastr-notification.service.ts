@@ -13,7 +13,6 @@ export class ToastrNotificationService {
       timeOut: 4000,
       positionClass: 'toast-bottom-right',
     };
-    debugger
   
     switch (response.notificationType) {
       case 0:

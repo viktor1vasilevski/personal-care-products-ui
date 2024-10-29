@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../core/services/product/product.service';
 import { CommonModule } from '@angular/common';
-import { Product } from './product.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { QueryResponse } from '../../../models/responses/query-response.model';
+import { Product } from '../../../models/product/product.model';
 
 @Component({
   selector: 'app-product',
@@ -35,10 +36,9 @@ export class ProductComponent implements OnInit {
     this.loadProducts();
   }
 
-  loadProducts() {
-    const { category, subCategory } = this.filterForm.value;
-    this._productService.getProducts({ skip: this.skip, take: this.itemsPerPage }).subscribe((response: any) => {
-      if (response && response.data) {
+  loadProducts(): void {
+    this._productService.getProducts({ skip: this.skip, take: this.itemsPerPage }).subscribe((response: QueryResponse<Product[]>) => {
+      if (response && response.success && response.data) {
         this.products = response.data;
       } else {
         this.products = [];
