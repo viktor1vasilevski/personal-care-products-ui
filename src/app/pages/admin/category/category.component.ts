@@ -116,7 +116,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   createCategory() {
-    this.createCategorySub = this._modalService.openModal(this.createCategoryEntry, CreateCategoryModalComponent).subscribe((data: any) => {
+    this.createCategorySub = this._modalService.openModal(this.createCategoryEntry, CreateCategoryModalComponent, null, true).subscribe((data: any) => {
       this._categoryService.createCategory(data).subscribe((response: any) => {
         if(response && response.data) {
           this.loadCategories();
@@ -132,7 +132,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   detailsCategory(id: string) {
     this._categoryService.getCategoryById(id).subscribe((response: any) => {
       if(response && response.data) {
-        this.detailsCategorySub = this._modalService.openModal(this.detailsCategoryEntry, DetailsCategoryModalComponent, response.data).subscribe(() => {
+        this.detailsCategorySub = this._modalService.openModal(this.detailsCategoryEntry, DetailsCategoryModalComponent, response.data, false).subscribe(() => {
           
         })
       }
@@ -140,7 +140,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   updateCategory(category: any) {
-    this.updateCategorySub = this._modalService.openModal(this.updateCategoryEntry, UpdateCategoryModalComponent, category).subscribe((data: any) => {
+    this.updateCategorySub = this._modalService.openModal(this.updateCategoryEntry, UpdateCategoryModalComponent, category, true).subscribe((data: any) => {
       if(data) {
         this._categoryService.updateCategory(category.id, data).subscribe((response: any) => {
           if(response && response.data) {
@@ -155,7 +155,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   deleteCategory(category: any) {
-    this.deleteCategorySub = this._modalService.openModal(this.deleteCategoryEntry, DeleteCategoryModalComponent, category).subscribe(() => {
+    this.deleteCategorySub = this._modalService.openModal(this.deleteCategoryEntry, DeleteCategoryModalComponent, category, true).subscribe(() => {
       this._categoryService.deleteCategory(category.id).subscribe((response: any) => {
         if(response && response.data) {
           this.loadCategories();

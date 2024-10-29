@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openLoginModal() {
-    this.loginSub = this._modalService.openModal(this.loginEntry, LoginComponent).subscribe((data: any) => {
+    this.loginSub = this._modalService.openModal(this.loginEntry, LoginComponent, null, true).subscribe((data: any) => {
       this._accountService.loginUser(data).subscribe((response: any) => {
         if(response.success) {
           const token = response.data.token; 
@@ -90,8 +90,8 @@ export class HeaderComponent implements OnInit {
   }
 
   openRegisterModal() {
-    this.registerSub = this._modalService.openModal(this.registerEntry, RegisterComponent).subscribe((model) => {
-      this._accountService.registerUser(model).subscribe((response: any) => {
+    this.registerSub = this._modalService.openModal(this.registerEntry, RegisterComponent, null, true).subscribe((data) => {
+      this._accountService.registerUser(data).subscribe((response: any) => {
              
         this._toastr.success(`User ${response.userName} registered!`, 'Success', { timeOut: 3000, positionClass: 'toast-bottom-right' });
       })
