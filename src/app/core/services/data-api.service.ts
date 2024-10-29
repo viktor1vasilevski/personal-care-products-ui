@@ -14,8 +14,6 @@ export class DataApiService<T> {
     return this._http.get<QueryResponse<T[]>>(apiUrl, { params });
   }
   
-  
-
   getById(apiUrl: string, id: string): Observable<T> {
     return this._http.get<T>(`${apiUrl}/${id}`);
   }

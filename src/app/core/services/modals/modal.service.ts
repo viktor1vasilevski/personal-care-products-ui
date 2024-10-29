@@ -1,6 +1,5 @@
 import { Injectable, ComponentRef, ViewContainerRef } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { IModalComponent } from '../../../models/modal.interface';
 
 @Injectable({
   providedIn: 'root'

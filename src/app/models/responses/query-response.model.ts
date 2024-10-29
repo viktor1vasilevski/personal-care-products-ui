@@ -1,5 +1,3 @@
-// src/app/shared/constants/query-response.model.ts
-
 export interface QueryResponse<T> {
     data: T;
     success: boolean;

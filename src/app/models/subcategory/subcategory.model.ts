@@ -1,8 +1,8 @@
 export interface Subcategory {
-    id: string; // Use string to represent Guid
+    id: string;
     name: string;
     createdBy: string;
     created: Date;
-    lastModifiedBy?: string; // Optional property
-    lastModified?: Date; // Optional property
+    lastModifiedBy?: string;
+    lastModified?: Date;
 }
