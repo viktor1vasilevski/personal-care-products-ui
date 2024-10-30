@@ -19,12 +19,15 @@ export const routes: Routes = [
     },
     { 
         path: 'admin/subcategory', 
-        component: SubcategoryComponent,
+        loadComponent: () => import('./pages/admin/subcategory/subcategory.component')
+            .then((m) => m.SubcategoryComponent),
         canActivate: [ authGuard ],
         data: { roles: ['Admin'] }
     },
     { 
         path: 'admin/category', 
+        loadComponent: () => import('./pages/admin/category/category.component')
+            .then((m) => m.CategoryComponent),
         component: CategoryComponent,
         canActivate: [ authGuard ],
         data: { roles: ['Admin'] }
