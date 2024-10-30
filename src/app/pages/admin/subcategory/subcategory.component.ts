@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../../core/services/modals/modal.service';
 import { DetailsSubcategoryModalComponent } from '../../../core/components/modals/subcategory/details-subcategory-modal/details-subcategory-modal.component';
+import { Subcategory } from '../../../models/subcategory/subcategory.model';
+import { SingleResponse } from '../../../models/responses/single-response.model';
+import { DeleteSubcategoryModalComponent } from '../../../core/components/modals/subcategory/delete-subcategory-modal/delete-subcategory-modal.component';
+import { ToastrNotificationService } from '../../../core/services/toastr-notification.service';
 
 @Component({
   selector: 'app-subcategory',
@@ -24,7 +28,12 @@ export class SubcategoryComponent implements OnInit {
   detailsSubcategoryEntry!: ViewContainerRef;
   detailsSubcategorySub!: Subscription;
 
+  @ViewChild('deleteSubcategoryModal', { read: ViewContainerRef })
+  deleteSubcategoryEntry!: ViewContainerRef;
+  deleteSubcategorySub!: Subscription;
+
   constructor(private _subcategoryService: SubcategoryService,
+    private _toastrNotification: ToastrNotificationService,
     private _modalService: ModalService<any>
   ) { }
 
@@ -35,7 +44,7 @@ export class SubcategoryComponent implements OnInit {
   loadSubcategories() {
     // const { category, subCategory } = this.filterForm.value;
     this._subcategoryService.getSubcategories({ skip: 0, take: 10 }).subscribe((response: any) => {
-      if (response && response.data) {
+      if (response && response.success && response.data) {
         this.subcategories = response.data;
       } else {
         this.subcategories = [];
@@ -48,7 +57,7 @@ export class SubcategoryComponent implements OnInit {
   }
 
   detailsSubcategory(id: string) {
-    this._subcategoryService.getByIdSubcategory(id).subscribe((response: any) => {
+    this._subcategoryService.getByIdSubcategory(id).subscribe((response: SingleResponse<Subcategory>) => {
       if(response && response.data) {
         this.detailsSubcategorySub = this._modalService.openModal(this.detailsSubcategoryEntry, DetailsSubcategoryModalComponent, response.data).subscribe((data: any) => {
           alert()
@@ -57,6 +66,30 @@ export class SubcategoryComponent implements OnInit {
       }
       
     })
+    
+  }
+
+  deleteSubcategory(subcategory: Subcategory) {
+    this.deleteSubcategorySub = this._modalService.openModal(
+      this.deleteSubcategoryEntry,
+      DeleteSubcategoryModalComponent,
+      subcategory,
+      true
+    ).subscribe(() => {
+      this._subcategoryService.deleteSubcategory(subcategory.id).subscribe((response: SingleResponse<Subcategory>) => {
+        if(response && response.success && response.data) {
+          this.loadSubcategories();
+          this._toastrNotification.showNotification(response);
+        } else {
+          this._toastrNotification.showNotification(response);
+        }
+      })
+    })
+
+  }
+
+  editSubcategory(subcategory: Subcategory) {
+    console.log('edit subcategory');
     
   }
 
