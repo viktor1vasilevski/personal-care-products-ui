@@ -12,7 +12,8 @@ export const routes: Routes = [
     { path: 'soaps/beard', component: SoapsBeardComponent },
     { 
         path: 'admin/product', 
-        component: ProductComponent,
+        loadComponent: () => import('./pages/admin/product/product.component')
+            .then((m) => m.ProductComponent),
         canActivate: [ authGuard ],
         data: { roles: ['Admin'] }
     },
