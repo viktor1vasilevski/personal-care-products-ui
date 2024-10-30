@@ -3,36 +3,37 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-update-category-modal',
+  selector: 'app-update-subcategory-modal',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './update-category-modal.component.html',
-  styleUrl: './update-category-modal.component.css'
+  templateUrl: './update-subcategory-modal.component.html',
+  styleUrl: './update-subcategory-modal.component.css'
 })
-export class UpdateCategoryModalComponent implements OnInit {
+export class UpdateSubcategoryModalComponen  implements OnInit {
 
   @Output() closeMeEvent = new EventEmitter();
   @Output() confirmEvent = new EventEmitter<any>();
-  
+
   data: any;
-  updateCategoryForm: FormGroup;
+  updateSubcategoryForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.updateCategoryForm = this.fb.group({
+    this.updateSubcategoryForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
+
   ngOnInit() {
     if (this.data) {
-      this.updateCategoryForm.patchValue({
+      this.updateSubcategoryForm.patchValue({
         name: this.data.name
       });
     }
   }
 
   get name() {
-    return this.updateCategoryForm.get('name');
+    return this.updateSubcategoryForm.get('name');
   }
 
   closeMe() {
@@ -40,12 +41,11 @@ export class UpdateCategoryModalComponent implements OnInit {
   }
 
   confirm() { 
-    if (this.updateCategoryForm.valid) {
-      const { name } = this.updateCategoryForm.value;
-      const updatedCategoryData: any = { name };
+    if (this.updateSubcategoryForm.valid) {
+      const { name } = this.updateSubcategoryForm.value;
+      const updatedSubcategoryData: any = { name };
       
-      this.confirmEvent.emit(updatedCategoryData);
+      this.confirmEvent.emit(updatedSubcategoryData);
     }
   }
-
 }

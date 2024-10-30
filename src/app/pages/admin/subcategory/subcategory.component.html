@@ -21,7 +21,7 @@
         <td>{{ subcategory.lastModifiedBy ? subcategory.lastModifiedBy : '/' }}</td>
         <td>
           <button class="btn btn-primary btn-sm" (click)="detailsSubcategory(subcategory.id)">Details</button> |
-          <button class="btn btn-primary btn-sm" (click)="editSubcategory(subcategory)">Edit</button> |
+          <button class="btn btn-primary btn-sm" (click)="updateSubcategory(subcategory)">Edit</button> |
           <button class="btn btn-danger btn-sm" (click)="deleteSubcategory(subcategory)">Delete</button>
         </td>
       </tr>
@@ -32,4 +32,5 @@
     <div #createSubcategoryModal></div>
     <div #detailsSubcategoryModal></div>
     <div #deleteSubcategoryModal></div>
+    <div #updateSubcategoryModal></div>
   </div>

@@ -8,6 +8,7 @@ import { Subcategory } from '../../../models/subcategory/subcategory.model';
 import { SingleResponse } from '../../../models/responses/single-response.model';
 import { DeleteSubcategoryModalComponent } from '../../../core/components/modals/subcategory/delete-subcategory-modal/delete-subcategory-modal.component';
 import { ToastrNotificationService } from '../../../core/services/toastr-notification.service';
+import { UpdateSubcategoryModalComponen } from '../../../core/components/modals/subcategory/update-subcategory-modal/update-subcategory-modal.component';
 
 @Component({
   selector: 'app-subcategory',
@@ -31,6 +32,10 @@ export class SubcategoryComponent implements OnInit {
   @ViewChild('deleteSubcategoryModal', { read: ViewContainerRef })
   deleteSubcategoryEntry!: ViewContainerRef;
   deleteSubcategorySub!: Subscription;
+
+  @ViewChild('updateSubcategoryModal', { read: ViewContainerRef })
+  updateSubcategoryEntry!: ViewContainerRef;
+  updateSubcategorySub!: Subscription;
 
   constructor(private _subcategoryService: SubcategoryService,
     private _toastrNotification: ToastrNotificationService,
@@ -88,13 +93,19 @@ export class SubcategoryComponent implements OnInit {
 
   }
 
-  editSubcategory(subcategory: Subcategory) {
-    console.log('edit subcategory');
+  updateSubcategory(subcategory: Subcategory) {
+    this.updateSubcategorySub = this._modalService.openModal(
+      this.updateSubcategoryEntry, 
+      UpdateSubcategoryModalComponen, 
+      subcategory, 
+      true).subscribe((data: any) => {
+
+    })
     
   }
 
   openCreateSubcategoryModal() {
-    console.log('openCreateSubcategoryModal');
+    
     
 
     
