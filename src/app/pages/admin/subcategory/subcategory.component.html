@@ -1,36 +1,36 @@
 <h2 class="mb-4">Subcategory List</h2>
 
-<button class="btn btn-primary me-2" (click)="openCreateSubcategoryModal()" >Create Subcategory</button>
+<button class="btn btn-primary me-2" (click)="openCreateSubcategoryModal()">Create Subcategory</button>
 <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Created</th>
-        <th>Created By</th>
-        <th>Last Modified</th>
-        <th>Last Modified By</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let subcategory of subcategories">
-        <td>{{ subcategory.name }}</td>
-        <td>{{ subcategory.created | date:'dd/MM/yyyy' }}</td>
-        <td>{{ subcategory.createdBy }}</td>
-        <td>{{ subcategory.lastModified ? (subcategory.lastModified | date:'dd/MM/yyyy') : '/' }}</td>
-        <td>{{ subcategory.lastModifiedBy ? subcategory.lastModifiedBy : '/' }}</td>
-        <td>
-          <button class="btn btn-info btn-sm" (click)="detailsSubcategory(subcategory.id)">Details</button> |
-          <button class="btn btn-primary btn-sm" (click)="updateSubcategory(subcategory)">Update</button> |
-          <button class="btn btn-danger btn-sm" (click)="deleteSubcategory(subcategory)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Created</th>
+      <th>Created By</th>
+      <th>Last Modified</th>
+      <th>Last Modified By</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let subcategory of subcategories">
+      <td>{{ subcategory.name }}</td>
+      <td>{{ subcategory.created | date:'dd/MM/yyyy' }}</td>
+      <td>{{ subcategory.createdBy }}</td>
+      <td>{{ subcategory.lastModified ? (subcategory.lastModified | date:'dd/MM/yyyy') : '/' }}</td>
+      <td>{{ subcategory.lastModifiedBy ? subcategory.lastModifiedBy : '/' }}</td>
+      <td>
+        <button class="btn btn-info btn-sm" (click)="detailsSubcategory(subcategory.id)">Details</button> |
+        <button class="btn btn-primary btn-sm" (click)="updateSubcategory(subcategory)">Update</button> |
+        <button class="btn btn-danger btn-sm" (click)="deleteSubcategory(subcategory)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <div class="modal-container">
-    <div #createSubcategoryModal></div>
-    <div #detailsSubcategoryModal></div>
-    <div #deleteSubcategoryModal></div>
-    <div #updateSubcategoryModal></div>
-  </div>
+<div class="modal-container">
+  <div #createSubcategoryModal></div>
+  <div #detailsSubcategoryModal></div>
+  <div #deleteSubcategoryModal></div>
+  <div #updateSubcategoryModal></div>
+</div>

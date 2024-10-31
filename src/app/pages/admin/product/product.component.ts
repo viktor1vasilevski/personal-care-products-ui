@@ -60,6 +60,23 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  createProduct() {
+    
+  }
+
+  detailsProduct(id: any): void {
+    console.log(id);
+  }
+
+  updateProduct(product: Product): void {
+    console.log(product);
+  }
+
+  deleteProduct(product: Product) : void {
+    console.log(product);
+    
+  }
+
   calculateTotalPages(): void {
     const pages = Math.ceil(this.totalCount / this.productRequest.take);
     this.totalPages = Array.from({ length: pages }, (_, i) => i + 1);

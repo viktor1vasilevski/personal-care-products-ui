@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-details-category-modal',
+  selector: 'app-details-product-modal',
   standalone: true,
-  imports: [ CommonModule ],
-  templateUrl: './details-category-modal.component.html',
-  styleUrl: './details-category-modal.component.css'
+  imports: [CommonModule],
+  templateUrl: './details-product-modal.component.html',
+  styleUrl: './details-product-modal.component.css'
 })
-export class DetailsCategoryModalComponent {
+export class DetailsProductModalComponent {
 
   @Output() closeMeEvent = new EventEmitter();
 
