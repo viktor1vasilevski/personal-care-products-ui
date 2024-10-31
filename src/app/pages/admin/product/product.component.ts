@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { Product } from '../../../models/product/product.model';
+import { ProductRequest } from '../../../models/requests/product-request.model';
+import { TestRequest } from '../../../models/requests/test-request';
 
 @Component({
   selector: 'app-product',
@@ -16,12 +18,20 @@ export class ProductComponent implements OnInit {
 
   products: Product[] = [];
   totalCount: number = 0;
-  skip: number = 0;
-  itemsPerPage : number = 10;
+  //skip: number = 0;
+  //itemsPerPage : number = 10;
   currentPage = 1;
   totalPages: number[] = [];
-
+  //sortOrder: string = 'desc';
   filterForm: FormGroup;
+
+  productRequest: ProductRequest = {
+    skip: 0,
+    take: 10,
+    category: '',
+    subcategorty: '',
+    sort: 'desc'
+  };
 
   constructor(private _productService: ProductService,
     private fb: FormBuilder
@@ -37,7 +47,7 @@ export class ProductComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this._productService.getProducts({ skip: this.skip, take: this.itemsPerPage }).subscribe((response: QueryResponse<Product[]>) => {
+    this._productService.getProducts(this.productRequest).subscribe((response: QueryResponse<Product[]>) => {
       if (response && response.success && response.data) {
         this.products = response.data;
       } else {
@@ -51,13 +61,18 @@ export class ProductComponent implements OnInit {
   }
 
   calculateTotalPages(): void {
-    const pages = Math.ceil(this.totalCount / this.itemsPerPage);
+    const pages = Math.ceil(this.totalCount / this.productRequest.take);
     this.totalPages = Array.from({ length: pages }, (_, i) => i + 1);
+  }
+
+  toggleSortOrder() {
+    this.productRequest.sort = this.productRequest.sort === 'asc' ? 'desc' : 'asc';
+    this.loadProducts();
   }
 
   changePage(page: number): void {
     this.currentPage = page;
-    this.skip = (page - 1) * this.itemsPerPage;
+    this.productRequest.skip = (page - 1) * this.productRequest.take;
     this.loadProducts();
   }
 
@@ -65,8 +80,8 @@ export class ProductComponent implements OnInit {
     const selectElement = event.target as HTMLSelectElement;
     const parsedValue = Number(selectElement.value);
     if (!isNaN(parsedValue)) {
-      this.itemsPerPage = parsedValue;
-      this.skip = 0;
+      this.productRequest.take = parsedValue;
+      this.productRequest.skip = 0;
       this.currentPage = 1;
       this.loadProducts();
     }
@@ -74,20 +89,20 @@ export class ProductComponent implements OnInit {
   
 
   onFilterChange(): void {
-    this.skip = 0;
+    this.productRequest.skip = 0;
     this.loadProducts();
   }
 
   previousPage(): void {
-    if (this.skip > 0) {
-      this.skip -= this.itemsPerPage;
+    if (this.productRequest.skip > 0) {
+      this.productRequest.skip -= this.productRequest.take;
       this.loadProducts();
     }
   }
 
   nextPage(): void {
-    if (this.skip + this.itemsPerPage < this.totalCount) {
-      this.skip += this.itemsPerPage;
+    if (this.productRequest.skip + this.productRequest.take < this.totalCount) {
+      this.productRequest.skip += this.productRequest.take;
       this.loadProducts();
     }
   }

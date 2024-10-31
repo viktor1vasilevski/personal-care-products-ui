@@ -21,7 +21,7 @@ export class CategoryService {
   getCategories(paramsObj: { [key: string]: any } = {}): Observable<QueryResponse<Category[]>> {
     const params = new HttpParams({ fromObject: paramsObj });
     const url = `${this.baseUrl}/${RESOURCE_PATH.CATEGORY}/${API_ENDPOINTS.GET}`;
-    return this._dataApiService.getAll<Category>(url, params);
+    return this._dataApiService.getAll<Category[]>(url, params);
   }
   
   createCategory(categoryData: { name: string }): Observable<any> {

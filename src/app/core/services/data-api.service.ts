@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { QueryResponse } from '../../models/responses/query-response.model';
+import { SingleResponse } from '../../models/responses/single-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,14 @@ export class DataApiService<T> {
 
   constructor(private _http: HttpClient) {}
 
-  getAll<T>(apiUrl: string, params?: HttpParams): Observable<QueryResponse<T[]>> {
-    return this._http.get<QueryResponse<T[]>>(apiUrl, { params });
+  getAll<T>(apiUrl: string, params?: HttpParams): Observable<QueryResponse<T>> {
+    return this._http.get<QueryResponse<T>>(apiUrl, { params });
   }
   
-  getById(apiUrl: string, id: string): Observable<T> {
-    return this._http.get<T>(`${apiUrl}/${id}`);
+  getById<T>(apiUrl: string, id: string): Observable<SingleResponse<T>> {
+    return this._http.get<SingleResponse<T>>(`${apiUrl}/${id}`);
   }
+  
 
   create(apiUrl: string, item: any): Observable<T> {
     return this._http.post<T>(apiUrl, item, {

@@ -17,15 +17,18 @@ export class SoapsBeardComponent implements OnInit {
   ) {
 
   }
-
   ngOnInit(): void {
-    this._productService.getProducts({category: 'soaps', subcategory: 'beard', skip: 0, take: 100 }).subscribe((response: any) => {
-      if(response.success) {
-        this.soapsBeardProducts = response.data;
-
-      }  
-    })
+    throw new Error('Method not implemented.');
   }
+
+  // ngOnInit(): void {
+  //   this._productService.getProducts({category: 'soaps', subcategory: 'beard', skip: 0, take: 100 }).subscribe((response: any) => {
+  //     if(response.success) {
+  //       this.soapsBeardProducts = response.data;
+
+  //     }  
+  //   })
+  // }
 
 
 

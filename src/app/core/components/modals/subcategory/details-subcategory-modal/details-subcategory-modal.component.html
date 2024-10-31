@@ -20,11 +20,11 @@
             <div class="detail-item" *ngIf="data?.modifiedBy">
               <strong>Modified By:</strong> {{ data?.modifiedBy }}
             </div>
-            <div class="detail-item" *ngIf="data?.subcategories?.length > 0">
-              <strong>Subcategories:</strong>
-              <ul class="subcategory-list">
-                <li *ngFor="let subcategory of data?.subcategories">{{ subcategory }}</li>
-              </ul>
+            <div class="detail-item" *ngIf="data?.products?.length > 0">
+              <strong>Products:</strong>
+              <div class="products-list">
+                <p *ngFor="let product of data?.products">{{ product }}</p>,
+              </div>
             </div>
           </div>
         </div>

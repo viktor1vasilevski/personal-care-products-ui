@@ -29,7 +29,10 @@
           <th>Description</th>
           <th>Category</th>
           <th>Subcategory</th>
-          <th>Created</th>
+          <th (click)="toggleSortOrder()" style="cursor: pointer;">
+            Created 
+            <i [ngClass]="productRequest.sort === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+          </th>
           <th>Created By</th>
           <th>Last Modified</th>
           <th>Last Modified By</th>
@@ -65,10 +68,10 @@
         <div class="me-auto">
           <label for="itemsPerPage" class="form-label">Items per page:</label>
           <select id="itemsPerPage" (change)="onItemsPerPageChange($event)" class="form-select">
-            <option value="5">5</option>
             <option value="10" selected>10</option>
-            <option value="15">15</option>
             <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
           </select>
         </div>
       

@@ -25,10 +25,11 @@ export class SubcategoryService {
 }
 
 
-  getByIdSubcategory(id: string): Observable<any> {
-    const url = `${this.baseUrl}${RESOURCE_PATH.SUBCATEGORY}${API_ENDPOINTS.GET_BY_ID}`;
-    return this._dataApiService.getById(url, id);
-  }
+getSubcategoryById(id: string): Observable<SingleResponse<Subcategory>> {
+  const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.GET_BY_ID}`;
+  return this._dataApiService.getById<Subcategory>(url, id);
+}
+
 
   deleteSubcategory(id: string): Observable<SingleResponse<Subcategory>> {
     const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.DELETE}/${id}`;

@@ -3,7 +3,6 @@ import { SoapsBeardComponent } from './pages/customer/soaps/beard/soaps-beard/so
 import { authGuard } from './core/guards/auth.guard';
 import { UnauthorizedComponent } from './shared/unauthorized/unauthorized.component';
 import { HomeComponent } from './core/components/home/home.component';
-import { CategoryComponent } from './pages/admin/category/category.component';
 
 export const routes: Routes = [
 
@@ -26,7 +25,6 @@ export const routes: Routes = [
         path: 'admin/category', 
         loadComponent: () => import('./pages/admin/category/category.component')
             .then((m) => m.CategoryComponent),
-        component: CategoryComponent,
         canActivate: [ authGuard ],
         data: { roles: ['Admin'] }
     },

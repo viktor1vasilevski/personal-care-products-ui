@@ -7,6 +7,7 @@ import { RESOURCE_PATH } from '../../../shared/constants/endpoints/resource-path
 import { API_ENDPOINTS } from '../../../shared/constants/endpoints/api-endpoints';
 import { Product } from '../../../models/product/product.model';
 import { QueryResponse } from '../../../models/responses/query-response.model';
+import { ProductRequest } from '../../../models/requests/product-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +18,16 @@ export class ProductService {
 
   constructor(private _dataApiService: DataApiService<any>) {}
 
-  getProducts(paramsObj: { [key: string]: any } = {}): Observable<QueryResponse<Product[]>> {
-    const params = new HttpParams({ fromObject: paramsObj });
+  getProducts(request: ProductRequest): Observable<QueryResponse<Product[]>> {
+    const params = new HttpParams()
+      .set('skip', request.skip.toString())
+      .set('take', request.take.toString())
+      .set('sort', request.sort)
+      .set('category', request.category)
+      .set('subcategory', request.subcategorty);
+
     const url = `${this.baseUrl}/${RESOURCE_PATH.PRODUCT}/${API_ENDPOINTS.GET}`;
-    return this._dataApiService.getAll<Product>(url, params);
+    return this._dataApiService.getAll<Product[]>(url, params);
   }
   
 }
