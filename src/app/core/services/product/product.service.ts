@@ -8,6 +8,7 @@ import { API_ENDPOINTS } from '../../../shared/constants/endpoints/api-endpoints
 import { Product } from '../../../models/product/product.model';
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { ProductRequest } from '../../../models/requests/product-request.model';
+import { SingleResponse } from '../../../models/responses/single-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,12 @@ export class ProductService {
       .set('subcategory', request.subcategorty);
 
     const url = `${this.baseUrl}/${RESOURCE_PATH.PRODUCT}/${API_ENDPOINTS.GET}`;
-    return this._dataApiService.getAll<Product[]>(url, params);
+    return this._dataApiService.getAll<QueryResponse<Product[]>>(url, params);
+  }
+
+  getProductById(id: string): Observable<SingleResponse<Product>> {
+    const url = `${this.baseUrl}/${RESOURCE_PATH.PRODUCT}/${API_ENDPOINTS.GET_BY_ID}`;
+    return this._dataApiService.getById<SingleResponse<Product>>(url, id);
   }
   
 }

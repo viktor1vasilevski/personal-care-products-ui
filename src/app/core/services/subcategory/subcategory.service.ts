@@ -18,16 +18,16 @@ export class SubcategoryService {
 
   constructor(private _dataApiService: DataApiService<any>) {}
 
-  getSubcategories(paramsObj: { [key: string]: any } = {}): Observable<QueryResponse<Subcategory[]>> {
-    const params = new HttpParams({ fromObject: paramsObj });
-    const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.GET}`;
-    return this._dataApiService.getAll(url, params);
+getSubcategories(paramsObj: { [key: string]: any } = {}): Observable<QueryResponse<Subcategory[]>> {
+  const params = new HttpParams({ fromObject: paramsObj });
+  const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.GET}`;
+  return this._dataApiService.getAll<QueryResponse<Subcategory[]>>(url, params);
 }
 
 
 getSubcategoryById(id: string): Observable<SingleResponse<Subcategory>> {
   const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.GET_BY_ID}`;
-  return this._dataApiService.getById<Subcategory>(url, id);
+  return this._dataApiService.getById<SingleResponse<Subcategory>>(url, id);
 }
 
 

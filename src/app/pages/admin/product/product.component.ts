@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ProductService } from '../../../core/services/product/product.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { Product } from '../../../models/product/product.model';
 import { ProductRequest } from '../../../models/requests/product-request.model';
-import { TestRequest } from '../../../models/requests/test-request';
+import { SingleResponse } from '../../../models/responses/single-response.model';
+import { Subscription } from 'rxjs';
+import { ModalService } from '../../../core/services/modals/modal.service';
+import { DetailsProductModalComponent } from '../../../core/components/modals/product/details-product-modal/details-product-modal.component';
 
 @Component({
   selector: 'app-product',
@@ -33,7 +36,12 @@ export class ProductComponent implements OnInit {
     sort: 'desc'
   };
 
+  @ViewChild('detailsProductModal', { read: ViewContainerRef })
+  detailsProductEntry!: ViewContainerRef;
+  detailsProductSub!: Subscription;
+
   constructor(private _productService: ProductService,
+    private _modalService: ModalService<any>,
     private fb: FormBuilder
   ) {
     this.filterForm = this.fb.group({
@@ -65,7 +73,16 @@ export class ProductComponent implements OnInit {
   }
 
   detailsProduct(id: any): void {
-    console.log(id);
+    this._productService.getProductById(id).subscribe((response: SingleResponse<Product>) => {
+      if(response && response.success && response.data) {
+        this.detailsProductSub = this._modalService.openModal(
+          this.detailsProductEntry, 
+          DetailsProductModalComponent,
+          response.data,
+          false).subscribe(() => {})
+      }
+      
+    })
   }
 
   updateProduct(product: Product): void {
@@ -122,6 +139,10 @@ export class ProductComponent implements OnInit {
       this.productRequest.skip += this.productRequest.take;
       this.loadProducts();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.detailsProductSub?.unsubscribe();
   }
 
 }

@@ -1,12 +1,39 @@
 <div class="modal-overlay">
     <div class="modal-container">
         <div class="modal-card">
-            <h4 class="modal-title">Category Details</h4>
+            <h4 class="modal-title">Product Details</h4>
             <hr>
             <div class="modal-body row">
                 <div class="col-12">
                     <div class="detail-item">
                         <strong>Name:</strong> {{ data?.name }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Brand:</strong> {{ data?.brand }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Description:</strong> {{ data?.description }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Unit Price:</strong> {{ data?.unitPrice }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Unit Quantity:</strong> {{ data?.unitQuantity }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Volume:</strong> {{ data?.volume }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Scent:</strong> {{ data?.scent }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Edition:</strong> {{ data?.edition }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Subcategory:</strong> {{ data?.subcategory }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Category:</strong> {{ data?.category }}
                     </div>
                     <div class="detail-item">
                         <strong>Created:</strong> {{ data?.created | date: 'medium' }}

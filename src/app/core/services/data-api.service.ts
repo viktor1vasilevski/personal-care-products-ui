@@ -11,12 +11,12 @@ export class DataApiService<T> {
 
   constructor(private _http: HttpClient) {}
 
-  getAll<T>(apiUrl: string, params?: HttpParams): Observable<QueryResponse<T>> {
-    return this._http.get<QueryResponse<T>>(apiUrl, { params });
+  getAll<T>(apiUrl: string, params?: HttpParams): Observable<T> {
+    return this._http.get<T>(apiUrl, { params });
   }
   
-  getById<T>(apiUrl: string, id: string): Observable<SingleResponse<T>> {
-    return this._http.get<SingleResponse<T>>(`${apiUrl}/${id}`);
+  getById<T>(apiUrl: string, id: string): Observable<T> {
+    return this._http.get<T>(`${apiUrl}/${id}`);
   }
   
 
