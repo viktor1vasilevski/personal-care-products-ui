@@ -9,6 +9,9 @@ import { SingleResponse } from '../../../models/responses/single-response.model'
 import { DeleteSubcategoryModalComponent } from '../../../core/components/modals/subcategory/delete-subcategory-modal/delete-subcategory-modal.component';
 import { ToastrNotificationService } from '../../../core/services/toastr-notification.service';
 import { UpdateSubcategoryModalComponen } from '../../../core/components/modals/subcategory/update-subcategory-modal/update-subcategory-modal.component';
+import { CreateSubcategoryModalComponent } from '../../../core/components/modals/subcategory/create-subcategory-modal/create-subcategory-modal.component';
+import { QueryResponse } from '../../../models/responses/query-response.model';
+import { SubcategoryRequest } from '../../../models/requests/subcategory-request.model';
 
 @Component({
   selector: 'app-subcategory',
@@ -20,6 +23,13 @@ import { UpdateSubcategoryModalComponen } from '../../../core/components/modals/
 export class SubcategoryComponent implements OnInit {
 
   subcategories : any[] = [];
+
+  subcategoryRequest: SubcategoryRequest = {
+    skip: 0,
+    take: 10,
+    category: '',
+    sort: 'desc'
+  };
 
   @ViewChild('createSubcategoryModal', { read: ViewContainerRef })
   createSubcategoryEntry!: ViewContainerRef;
@@ -48,7 +58,7 @@ export class SubcategoryComponent implements OnInit {
 
   loadSubcategories() {
     // const { category, subCategory } = this.filterForm.value;
-    this._subcategoryService.getSubcategories({ skip: 0, take: 10 }).subscribe((response: any) => {
+    this._subcategoryService.getSubcategories(this.subcategoryRequest).subscribe((response: QueryResponse<Subcategory[]>) => {
       if (response && response.success && response.data) {
         this.subcategories = response.data;
       } else {
@@ -101,15 +111,22 @@ export class SubcategoryComponent implements OnInit {
       UpdateSubcategoryModalComponen, 
       subcategory, 
       true).subscribe((data: any) => {
-
+        //this._subcategoryService.
+        
     })
     
   }
 
-  openCreateSubcategoryModal() {
-    
-    
+  createSubcategory() {
+    this.createSubcategorySub = this._modalService.openModal(
+      this.updateSubcategoryEntry,
+      CreateSubcategoryModalComponent,
+      null,
+      true
+    ).subscribe((data: any) => {
 
+    })
+    
     
   }
 

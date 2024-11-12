@@ -62,6 +62,13 @@
   .btn-secondary:hover {
     background-color: #5a6268;
   }
+
+  .subcategory-list .badge {
+    margin-right: 10px;
+    margin-bottom: 5px;
+  }
+  
+  
   
   @keyframes slide-down {
     from {
