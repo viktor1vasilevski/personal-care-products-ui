@@ -12,6 +12,9 @@ import { UpdateSubcategoryModalComponen } from '../../../core/components/modals/
 import { CreateSubcategoryModalComponent } from '../../../core/components/modals/subcategory/create-subcategory-modal/create-subcategory-modal.component';
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { SubcategoryRequest } from '../../../models/requests/subcategory-request.model';
+import { CategoryRequest } from '../../../models/requests/category-request.model';
+import { CategoryService } from '../../../core/services/category/category.service';
+import { CategoryDropdownRequest } from '../../../models/requests/category-dropdown-request.model';
 
 @Component({
   selector: 'app-subcategory',
@@ -31,6 +34,10 @@ export class SubcategoryComponent implements OnInit {
     sort: 'desc'
   };
 
+  categoryDropdownRequest: CategoryDropdownRequest = {
+    name: ''
+  };
+
   @ViewChild('createSubcategoryModal', { read: ViewContainerRef })
   createSubcategoryEntry!: ViewContainerRef;
   createSubcategorySub!: Subscription;
@@ -48,6 +55,7 @@ export class SubcategoryComponent implements OnInit {
   updateSubcategorySub!: Subscription;
 
   constructor(private _subcategoryService: SubcategoryService,
+    private _categoryService: CategoryService,
     private _toastrNotification: ToastrNotificationService,
     private _modalService: ModalService<any>
   ) { }
@@ -118,14 +126,21 @@ export class SubcategoryComponent implements OnInit {
   }
 
   createSubcategory() {
-    this.createSubcategorySub = this._modalService.openModal(
-      this.updateSubcategoryEntry,
-      CreateSubcategoryModalComponent,
-      null,
-      true
-    ).subscribe((data: any) => {
 
+    this._categoryService.getCategoriesDropdown(this.categoryDropdownRequest).subscribe((res:any) => {
+      this.createSubcategorySub = this._modalService.openModal(
+        this.updateSubcategoryEntry,
+        CreateSubcategoryModalComponent,
+        res.data,
+        true
+      ).subscribe((data: any) => {
+  
+      })
+      
     })
+
+
+
     
     
   }

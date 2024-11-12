@@ -11,6 +11,7 @@ import { SingleResponse } from '../../../models/responses/single-response.model'
 import { ProductRequest } from '../../../models/requests/product-request.model';
 import { Product } from '../../../models/product/product.model';
 import { CategoryRequest } from '../../../models/requests/category-request.model';
+import { CategoryDropdownRequest } from '../../../models/requests/category-dropdown-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,14 @@ export class CategoryService {
       .set('name', request.name);
 
     const url = `${this.baseUrl}/${RESOURCE_PATH.CATEGORY}/${API_ENDPOINTS.GET}`;
+    return this._dataApiService.getAll<QueryResponse<Category[]>>(url, params);
+  }
+
+  getCategoriesDropdown(request: CategoryDropdownRequest): Observable<QueryResponse<Category[]>> {
+    const params = new HttpParams()
+      .set('name', request.name.toString());
+
+    const url = `${this.baseUrl}/${RESOURCE_PATH.CATEGORY}/${API_ENDPOINTS.GET_CATEGORIES_DROPDOWN}`;
     return this._dataApiService.getAll<QueryResponse<Category[]>>(url, params);
   }
   
