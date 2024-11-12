@@ -9,7 +9,7 @@
       <th>Name</th>
       <th (click)="toggleSortOrder()" style="cursor: pointer;">
         Created
-        <i [ngClass]="sortOrder === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+        <i [ngClass]="categoryRequest.sort === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
       </th>
       <th>Created By</th>
       <th>Last Modified</th>
@@ -18,7 +18,7 @@
     </tr>
     <tr>
       <th>
-        <input type="text" [(ngModel)]="nameFilter" (input)="onNameChange()" class="form-control"
+        <input type="text" [(ngModel)]="categoryRequest.name" (input)="onNameChange()" class="form-control"
           placeholder="Filter by name" />
       </th>
       <th colspan="5"></th>

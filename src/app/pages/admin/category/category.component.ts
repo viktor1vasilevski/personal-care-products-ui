@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { Category } from '../../../models/category/category.model';
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { SingleResponse } from '../../../models/responses/single-response.model';
+import { CategoryRequest } from '../../../models/requests/category-request.model';
 
 @Component({
   selector: 'app-category',
@@ -24,12 +25,15 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   categories: Category[] = [];
   totalCount: number = 0;
-  skip: number = 0;
-  itemsPerPage : number = 5;
   currentPage = 1;
   totalPages: number[] = [];
-  nameFilter: string = '';
-  sortOrder: string = 'desc';
+
+  categoryRequest: CategoryRequest = {
+    skip: 0,
+    take: 10,
+    sort: 'desc',
+    name: ''
+  };
 
 
   @ViewChild('createCategoryModal', { read: ViewContainerRef })
@@ -59,12 +63,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   loadCategories() {
-    this._categoryService.getCategories({
-      skip: this.skip,
-      take: this.itemsPerPage,
-      sort: this.sortOrder,
-      name: this.nameFilter
-    }).subscribe((response: QueryResponse<Category[]>) => {
+    this._categoryService.getCategories(this.categoryRequest).subscribe((response: QueryResponse<Category[]>) => {
       if (response && response.data && response.success) {
         this.categories = response.data;
       } else {
@@ -78,13 +77,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   calculateTotalPages(): void {
-    const pages = Math.ceil(this.totalCount / this.itemsPerPage);
+    const pages = Math.ceil(this.totalCount / this.categoryRequest.take);
     this.totalPages = Array.from({ length: pages }, (_, i) => i + 1);
   }
 
   changePage(page: number): void {
     this.currentPage = page;
-    this.skip = (page - 1) * this.itemsPerPage;
+    this.categoryRequest.skip = (page - 1) * this.categoryRequest.take;
     this.loadCategories();
   }
 
@@ -92,28 +91,28 @@ export class CategoryComponent implements OnInit, OnDestroy {
     const selectElement = event.target as HTMLSelectElement;
     const parsedValue = Number(selectElement.value);
     if (!isNaN(parsedValue)) {
-      this.itemsPerPage = parsedValue;
-      this.skip = 0;
+      this.categoryRequest.take = parsedValue;
+      this.categoryRequest.skip = 0;
       this.currentPage = 1;
       this.loadCategories();
     }
   }
 
   onFilterChange(): void {
-    this.skip = 0;
+    this.categoryRequest.skip = 0;
     this.loadCategories();
   }
 
   previousPage(): void {
-    if (this.skip > 0) {
-      this.skip -= this.itemsPerPage;
+    if (this.categoryRequest.skip > 0) {
+      this.categoryRequest.skip -= this.categoryRequest.take;
       this.loadCategories();
     }
   }
 
   nextPage(): void {
-    if (this.skip + this.itemsPerPage < this.totalCount) {
-      this.skip += this.itemsPerPage;
+    if (this.categoryRequest.skip + this.categoryRequest.take < this.totalCount) {
+      this.categoryRequest.skip += this.categoryRequest.take;
       this.loadCategories();
     }
   }
@@ -170,12 +169,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   onNameChange() {
-    this.skip = 0;
+    this.categoryRequest.skip = 0;
     this.loadCategories();
   }
 
   toggleSortOrder() {
-    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    this.categoryRequest.sort = this.categoryRequest.sort === 'asc' ? 'desc' : 'asc';
     this.loadCategories();
   }
 

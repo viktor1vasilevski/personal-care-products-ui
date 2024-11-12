@@ -8,6 +8,9 @@ import { API_ENDPOINTS } from '../../../shared/constants/endpoints/api-endpoints
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { Category } from '../../../models/category/category.model';
 import { SingleResponse } from '../../../models/responses/single-response.model';
+import { ProductRequest } from '../../../models/requests/product-request.model';
+import { Product } from '../../../models/product/product.model';
+import { CategoryRequest } from '../../../models/requests/category-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +21,13 @@ export class CategoryService {
 
   constructor(private _dataApiService: DataApiService<any>) {}
 
-  getCategories(paramsObj: { [key: string]: any } = {}): Observable<QueryResponse<Category[]>> {
-    const params = new HttpParams({ fromObject: paramsObj });
+  getCategories(request: CategoryRequest): Observable<QueryResponse<Category[]>> {
+    const params = new HttpParams()
+      .set('skip', request.skip.toString())
+      .set('take', request.take.toString())
+      .set('sort', request.sort)
+      .set('name', request.name);
+
     const url = `${this.baseUrl}/${RESOURCE_PATH.CATEGORY}/${API_ENDPOINTS.GET}`;
     return this._dataApiService.getAll<QueryResponse<Category[]>>(url, params);
   }
