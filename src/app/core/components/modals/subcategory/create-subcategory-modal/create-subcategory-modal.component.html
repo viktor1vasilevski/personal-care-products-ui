@@ -15,17 +15,18 @@
                 </div>
 
                 <!-- Autocomplete for Category -->
-                <div class="form-group mb-3 position-relative">
+                <div class="form-group mb-3">
                     <label for="category">Category</label>
-                    <input type="text" id="category" formControlName="category" class="form-control"
-                        placeholder="Type to search..." (focus)="showDropdown()" (blur)="hideDropdown()" />
-                    <ul class="dropdown-menu" *ngIf="showOptions && filteredData.length > 0">
-                        <li class="dropdown-item" *ngFor="let category of filteredData"
-                            (click)="selectCategory(category)">
-                            {{ category.name }}
-                        </li>
-                    </ul>
+                    <select id="category" formControlName="categoryId" class="form-control">
+                        <option *ngFor="let category of data" [value]="category.id">{{ category.name }}</option>
+                    </select>
+                    <div *ngIf="createSubcategoryForm.get('category')?.invalid && createSubcategoryForm.get('category')?.touched"
+                        class="text-danger">
+                        <small>Category is required.</small>
+                    </div>
                 </div>
+
+
             </div>
 
             <!-- Buttons -->

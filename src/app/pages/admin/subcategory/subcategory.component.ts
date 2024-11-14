@@ -65,7 +65,6 @@ export class SubcategoryComponent implements OnInit {
   }
 
   loadSubcategories() {
-    // const { category, subCategory } = this.filterForm.value;
     this._subcategoryService.getSubcategories(this.subcategoryRequest).subscribe((response: QueryResponse<Subcategory[]>) => {
       if (response && response.success && response.data) {
         this.subcategories = response.data;
@@ -134,7 +133,16 @@ export class SubcategoryComponent implements OnInit {
         res.data,
         true
       ).subscribe((data: any) => {
-  
+        this._subcategoryService.createSubcategory(data).subscribe((response: any) => {
+          if(response && response.success && response.data) {
+            this.loadSubcategories();
+            this._toastrNotification.showNotification(response);
+          } else {
+            this._toastrNotification.showNotification(response);
+          }
+          
+        })
+        
       })
       
     })

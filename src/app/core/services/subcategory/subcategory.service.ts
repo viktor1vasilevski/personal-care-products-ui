@@ -48,6 +48,12 @@ export class SubcategoryService {
     return this._dataApiService.delete(url);
   }
 
+  createSubcategory(subcategoryData: { name: string, categoryId: string }): Observable<any> {
+    debugger
+    const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.CREATE}`;
+    return this._dataApiService.create(url, subcategoryData);
+  }
+
   // updateSubcategory(id: string, categoryData: { name: string }): Observable<any> {
   //   const url = `${this.baseUrl}/${RESOURCE_PATH.CATEGORY}/${API_ENDPOINTS.UPDATE}/${id}`;
   //   return this._dataApiService.update(url, categoryData);
