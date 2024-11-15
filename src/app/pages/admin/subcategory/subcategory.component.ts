@@ -12,7 +12,6 @@ import { UpdateSubcategoryModalComponen } from '../../../core/components/modals/
 import { CreateSubcategoryModalComponent } from '../../../core/components/modals/subcategory/create-subcategory-modal/create-subcategory-modal.component';
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { SubcategoryRequest } from '../../../models/requests/subcategory-request.model';
-import { CategoryRequest } from '../../../models/requests/category-request.model';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { CategoryDropdownRequest } from '../../../models/requests/category-dropdown-request.model';
 
@@ -26,6 +25,9 @@ import { CategoryDropdownRequest } from '../../../models/requests/category-dropd
 export class SubcategoryComponent implements OnInit {
 
   subcategories : any[] = [];
+  currentPage = 1;
+  totalPages: number[] = [];
+  totalCount: number = 0;
 
   subcategoryRequest: SubcategoryRequest = {
     skip: 0,
@@ -72,10 +74,15 @@ export class SubcategoryComponent implements OnInit {
         this.subcategories = [];
       }
 
-      // this.totalCount = typeof response?.totalCount === 'number' ? response.totalCount : 0;
+      this.totalCount = typeof response?.totalCount === 'number' ? response.totalCount : 0;
 
-      // this.calculateTotalPages();
+      this.calculateTotalPages();
     });
+  }
+
+  calculateTotalPages(): void {
+    const pages = Math.ceil(this.totalCount / this.subcategoryRequest.take);
+    this.totalPages = Array.from({ length: pages }, (_, i) => i + 1);
   }
 
   detailsSubcategory(id: string) {
@@ -147,6 +154,23 @@ export class SubcategoryComponent implements OnInit {
   toggleSortOrder(): void {
     this.subcategoryRequest.sort = this.subcategoryRequest.sort === 'asc' ? 'desc' : 'asc';
     this.loadSubcategories();
+  }
+
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.subcategoryRequest.skip = (page - 1) * this.subcategoryRequest.take;
+    this.loadSubcategories();
+  }
+
+  onItemsPerPageChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const parsedValue = Number(selectElement.value);
+    if (!isNaN(parsedValue)) {
+      this.subcategoryRequest.take = parsedValue;
+      this.subcategoryRequest.skip = 0;
+      this.currentPage = 1;
+      this.loadSubcategories();
+    }
   }
 
 }
