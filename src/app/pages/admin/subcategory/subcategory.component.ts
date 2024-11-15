@@ -14,11 +14,12 @@ import { QueryResponse } from '../../../models/responses/query-response.model';
 import { SubcategoryRequest } from '../../../models/requests/subcategory-request.model';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { CategoryDropdownRequest } from '../../../models/requests/category-dropdown-request.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-subcategory',
   standalone: true,
-  imports: [ CommonModule ],
+  imports: [ CommonModule, FormsModule ],
   templateUrl: './subcategory.component.html',
   styleUrl: './subcategory.component.css'
 })
@@ -32,6 +33,7 @@ export class SubcategoryComponent implements OnInit {
   subcategoryRequest: SubcategoryRequest = {
     skip: 0,
     take: 10,
+    name: '',
     category: '',
     sort: 'desc'
   };
@@ -149,6 +151,11 @@ export class SubcategoryComponent implements OnInit {
         })  
       }) 
     })
+  }
+
+  onNameChange() {
+    this.subcategoryRequest.skip = 0;
+    this.loadSubcategories();
   }
 
   toggleSortOrder(): void {

@@ -13,6 +13,13 @@
       <th>Last Modified By</th>
       <th>Actions</th>
     </tr>
+    <tr>
+      <th>
+        <input type="text" [(ngModel)]="subcategoryRequest.name" (input)="onNameChange()" class="form-control"
+          placeholder="Filter by name" />
+      </th>
+      <th colspan="5"></th>
+    </tr>
   </thead>
   <tbody>
     <tr *ngFor="let subcategory of subcategories">
