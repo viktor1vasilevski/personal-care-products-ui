@@ -5,7 +5,8 @@
             <div class="modal-body">
                 <div class="form-group mb-3">
                     <label for="username">Username</label>
-                    <input type="text" id="username" formControlName="username" class="form-control" placeholder="Enter your username">
+                    <input type="text" id="username" formControlName="username" class="form-control"
+                        placeholder="Enter your username" autocomplete="off">
                     <!-- <div *ngIf="username?.invalid && username?.touched" class="text-danger">
                         <small *ngIf="username?.errors?.['required']">Username is required.</small>
                         <small *ngIf="username?.errors?.['minlength']">Username must be at least 3 characters long.</small>
@@ -13,7 +14,8 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="password">Password</label>
-                    <input type="password" id="password" formControlName="password" class="form-control" placeholder="Enter your password">
+                    <input type="password" id="password" formControlName="password" class="form-control"
+                        placeholder="Enter your password">
                     <!-- <div *ngIf="password?.invalid && password?.touched" class="text-danger">
                         <small *ngIf="password?.errors?.['required']">Password is required.</small>
                         <small *ngIf="password?.errors?.['minlength']">Password must be at least 8 characters long, one special sign and one uppercase letter.</small>
@@ -31,4 +33,3 @@
         </form>
     </div>
 </div>
-

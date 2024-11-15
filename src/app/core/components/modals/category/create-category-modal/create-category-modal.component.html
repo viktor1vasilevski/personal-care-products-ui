@@ -5,7 +5,8 @@
             <div class="modal-body">
                 <div class="form-group mb-3">
                     <label for="name">Name</label>
-                    <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter category name">
+                    <input type="text" id="name" formControlName="name" class="form-control"
+                        placeholder="Enter category name" autocomplete="off">
                     <div *ngIf="name?.invalid && name?.touched" class="text-danger">
                         <small *ngIf="name?.errors?.['required']">Name is required.</small>
                         <small *ngIf="name?.errors?.['minlength']">Name must be at least 3 characters long.</small>
@@ -23,5 +24,3 @@
         </form>
     </div>
 </div>
-
-
