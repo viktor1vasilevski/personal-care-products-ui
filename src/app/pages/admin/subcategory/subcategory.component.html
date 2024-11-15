@@ -5,7 +5,9 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Created</th>
+      <th (click)="toggleSortOrder()" style="cursor: pointer;">Created
+        <i [ngClass]="subcategoryRequest.sort === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+      </th>
       <th>Created By</th>
       <th>Last Modified</th>
       <th>Last Modified By</th>

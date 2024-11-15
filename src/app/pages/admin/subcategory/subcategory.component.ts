@@ -125,7 +125,6 @@ export class SubcategoryComponent implements OnInit {
   }
 
   createSubcategory() {
-
     this._categoryService.getCategoriesDropdown(this.categoryDropdownRequest).subscribe((res:any) => {
       this.createSubcategorySub = this._modalService.openModal(
         this.updateSubcategoryEntry,
@@ -139,18 +138,15 @@ export class SubcategoryComponent implements OnInit {
             this._toastrNotification.showNotification(response);
           } else {
             this._toastrNotification.showNotification(response);
-          }
-          
-        })
-        
-      })
-      
+          }    
+        })  
+      }) 
     })
+  }
 
-
-
-    
-    
+  toggleSortOrder(): void {
+    this.subcategoryRequest.sort = this.subcategoryRequest.sort === 'asc' ? 'desc' : 'asc';
+    this.loadSubcategories();
   }
 
 }
