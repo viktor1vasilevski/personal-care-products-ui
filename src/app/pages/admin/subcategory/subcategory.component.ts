@@ -89,13 +89,12 @@ export class SubcategoryComponent implements OnInit {
 
   detailsSubcategory(id: string) {
     this._subcategoryService.getSubcategoryById(id).subscribe((response: SingleResponse<Subcategory>) => {
-      if(response && response.success && response.data) {
-        console.log(response);
-        
-        this.detailsSubcategorySub = this._modalService.openModal(this.detailsSubcategoryEntry, DetailsSubcategoryModalComponent, response.data).subscribe((data: any) => {
-          alert()
-          
-        })
+      if(response && response.success && response.data) { 
+        this.detailsSubcategorySub = this._modalService.openModal(
+          this.detailsSubcategoryEntry, 
+          DetailsSubcategoryModalComponent, 
+          response.data, 
+          false).subscribe(() => { })
       }
       
     })
