@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Category</th>
       <th (click)="toggleSortOrder()" style="cursor: pointer;">Created
         <i [ngClass]="subcategoryRequest.sort === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
       </th>
@@ -18,12 +19,18 @@
         <input type="text" [(ngModel)]="subcategoryRequest.name" (input)="onNameChange()" class="form-control"
           placeholder="Filter by name" />
       </th>
-      <th colspan="5"></th>
+      <th>
+        <select class="form-control" (change)="onCategoryChange($event)">
+          <option value="">All Categories</option>
+          <option [value]="category.id" *ngFor="let category of categoryDropdown">{{ category.name }}</option>
+        </select>
+      </th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let subcategory of subcategories">
       <td>{{ subcategory.name }}</td>
+      <td>{{ subcategory.category }}</td>
       <td>{{ subcategory.created | date:'dd/MM/yyyy' }}</td>
       <td>{{ subcategory.createdBy }}</td>
       <td>{{ subcategory.lastModified ? (subcategory.lastModified | date:'dd/MM/yyyy') : '/' }}</td>

@@ -34,13 +34,15 @@ export class SubcategoryComponent implements OnInit {
     skip: 0,
     take: 10,
     name: '',
-    category: '',
+    categoryId: '',
     sort: 'desc'
   };
 
   categoryDropdownRequest: CategoryDropdownRequest = {
     name: ''
   };
+
+  categoryDropdown: any[] = [];
 
   @ViewChild('createSubcategoryModal', { read: ViewContainerRef })
   createSubcategoryEntry!: ViewContainerRef;
@@ -66,6 +68,7 @@ export class SubcategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSubcategories();
+    this.loadCategories();
   }
 
   loadSubcategories() {
@@ -80,6 +83,20 @@ export class SubcategoryComponent implements OnInit {
 
       this.calculateTotalPages();
     });
+  }
+
+  loadCategories(): void {
+    this._categoryService.getCategoriesDropdown(this.categoryDropdownRequest).subscribe((response: any) => {
+      this.categoryDropdown = response.data;
+    })
+  }
+
+  onCategoryChange(event: Event): void {
+    debugger
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+    this.subcategoryRequest.categoryId = selectedValue;
+    this.loadSubcategories()
   }
 
   calculateTotalPages(): void {
@@ -121,6 +138,8 @@ export class SubcategoryComponent implements OnInit {
   }
 
   updateSubcategory(subcategory: Subcategory) {
+    
+    
     this.updateSubcategorySub = this._modalService.openModal(
       this.updateSubcategoryEntry, 
       UpdateSubcategoryModalComponen, 

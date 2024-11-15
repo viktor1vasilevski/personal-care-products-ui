@@ -2,6 +2,6 @@ export interface SubcategoryRequest {
     skip: number;
     take: number;
     name: string;
-    category: string;
+    categoryId: string | null;
     sort: string;
 }

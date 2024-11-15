@@ -11,7 +11,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
   templateUrl: './create-subcategory-modal.component.html',
   styleUrls: ['./create-subcategory-modal.component.css']
 })
-export class CreateSubcategoryModalComponent implements OnInit {
+export class CreateSubcategoryModalComponent {
 
   @Output() closeMeEvent = new EventEmitter();
   @Output() confirmEvent = new EventEmitter<any>();
@@ -27,14 +27,6 @@ export class CreateSubcategoryModalComponent implements OnInit {
       categoryId: ['', Validators.required] // Add category form control
     });
   }
-
-  ngOnInit(): void {
-    
-  }
-
-
-
-
 
   closeMe() {
     this.closeMeEvent.emit();

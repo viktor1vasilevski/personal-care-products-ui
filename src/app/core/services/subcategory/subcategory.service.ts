@@ -19,19 +19,13 @@ export class SubcategoryService {
 
   constructor(private _dataApiService: DataApiService<any>) {}
 
-  // getSubcategories(paramsObj: { [key: string]: any } = {}): Observable<QueryResponse<Subcategory[]>> {
-  //   const params = new HttpParams({ fromObject: paramsObj });
-  //   const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.GET}`;
-  //   return this._dataApiService.getAll<QueryResponse<Subcategory[]>>(url, params);
-  // }
-
-  getSubcategories(request: SubcategoryRequest): Observable<QueryResponse<Subcategory[]>> {
+  getSubcategories(request: SubcategoryRequest): Observable<QueryResponse<Subcategory[]>> {  
     const params = new HttpParams()
       .set('name', request.name.toString())
+      .set('categoryId', request.categoryId || '')
       .set('skip', request.skip.toString())
       .set('take', request.take.toString())
-      .set('sort', request.sort)
-      .set('category', request.category)
+      .set('sort', request.sort);
 
     const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.GET}`;
     return this._dataApiService.getAll<QueryResponse<Subcategory[]>>(url, params);
