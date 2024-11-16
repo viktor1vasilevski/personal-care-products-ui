@@ -138,14 +138,23 @@ export class SubcategoryComponent implements OnInit {
   }
 
   updateSubcategory(subcategory: Subcategory) {
-
     subcategory.categories = this.categoryDropdown;    
     this.updateSubcategorySub = this._modalService.openModal(
       this.updateSubcategoryEntry, 
       UpdateSubcategoryModalComponen, 
       subcategory, 
       true).subscribe((data: any) => {
-        //this._subcategoryService.
+        this._subcategoryService.updateSubcategory(subcategory.id, data).subscribe((response:any) => {
+          debugger
+          if(response && response.success && response.data) {
+            this.loadSubcategories();
+            this._toastrNotification.showNotification(response);
+          } else {
+            this._toastrNotification.showNotification(response);
+          }
+          
+        })
+        
         
     })
     
