@@ -13,7 +13,6 @@ import { CreateSubcategoryModalComponent } from '../../../core/components/modals
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { SubcategoryRequest } from '../../../models/requests/subcategory-request.model';
 import { CategoryService } from '../../../core/services/category/category.service';
-import { CategoryDropdownRequest } from '../../../models/requests/category-dropdown-request.model';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -36,10 +35,6 @@ export class SubcategoryComponent implements OnInit {
     name: '',
     categoryId: '',
     sort: 'desc'
-  };
-
-  categoryDropdownRequest: CategoryDropdownRequest = {
-    name: ''
   };
 
   categoryDropdown: any[] = [];
@@ -68,7 +63,7 @@ export class SubcategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSubcategories();
-    this.loadCategories();
+    this.loadCategoriesDropdown();
   }
 
   loadSubcategories() {
@@ -85,8 +80,8 @@ export class SubcategoryComponent implements OnInit {
     });
   }
 
-  loadCategories(): void {
-    this._categoryService.getCategoriesDropdown(this.categoryDropdownRequest).subscribe((response: any) => {
+  loadCategoriesDropdown(): void {
+    this._categoryService.getCategoriesDropdownList().subscribe((response: any) => {
       this.categoryDropdown = response.data;
     })
   }
@@ -161,7 +156,7 @@ export class SubcategoryComponent implements OnInit {
   }
 
   createSubcategory() {
-    this._categoryService.getCategoriesDropdown(this.categoryDropdownRequest).subscribe((res:any) => {
+    this._categoryService.getCategoriesDropdownList().subscribe((res:any) => {
       this.createSubcategorySub = this._modalService.openModal(
         this.updateSubcategoryEntry,
         CreateSubcategoryModalComponent,

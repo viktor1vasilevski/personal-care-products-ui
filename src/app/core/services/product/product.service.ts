@@ -21,11 +21,15 @@ export class ProductService {
 
   getProducts(request: ProductRequest): Observable<QueryResponse<Product[]>> {
     const params = new HttpParams()
+      .set('name', request.name.toString())
+      .set('brand', request.brand.toString())
+      .set('edition', request.edition.toString())
+      .set('scent', request.scent.toString())
+      .set('categoryId', request.categoryId)
+      .set('subcategoryId', request.subcategoryId)
       .set('skip', request.skip.toString())
       .set('take', request.take.toString())
-      .set('sort', request.sort)
-      .set('category', request.category)
-      .set('subcategory', request.subcategorty);
+      .set('sort', request.sort);
 
     const url = `${this.baseUrl}/${RESOURCE_PATH.PRODUCT}/${API_ENDPOINTS.GET}`;
     return this._dataApiService.getAll<QueryResponse<Product[]>>(url, params);

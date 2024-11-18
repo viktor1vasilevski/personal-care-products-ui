@@ -33,12 +33,9 @@ export class CategoryService {
     return this._dataApiService.getAll<QueryResponse<Category[]>>(url, params);
   }
 
-  getCategoriesDropdown(request: CategoryDropdownRequest): Observable<QueryResponse<Category[]>> {
-    const params = new HttpParams()
-      .set('name', request.name.toString());
-
+  getCategoriesDropdownList(): Observable<QueryResponse<Category[]>> {
     const url = `${this.baseUrl}/${RESOURCE_PATH.CATEGORY}/${API_ENDPOINTS.GET_CATEGORIES_DROPDOWN}`;
-    return this._dataApiService.getAll<QueryResponse<Category[]>>(url, params);
+    return this._dataApiService.getAll<QueryResponse<Category[]>>(url);
   }
   
   createCategory(categoryData: { name: string }): Observable<any> {

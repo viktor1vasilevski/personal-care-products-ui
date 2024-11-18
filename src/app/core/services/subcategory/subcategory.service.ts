@@ -31,6 +31,11 @@ export class SubcategoryService {
     return this._dataApiService.getAll<QueryResponse<Subcategory[]>>(url, params);
   }
 
+  getSubcategoriesDropdownList(): Observable<QueryResponse<any>> {
+    const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.GET_SUBCATEGORIES_DROPDOWN}`;
+    return this._dataApiService.getAll<QueryResponse<any>>(url);
+  }
+
 
   getSubcategoryById(id: string): Observable<SingleResponse<Subcategory>> {
     const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.GET_BY_ID}`;

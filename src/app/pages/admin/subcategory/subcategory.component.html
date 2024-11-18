@@ -21,7 +21,7 @@
       </th>
       <th>
         <select class="form-control" (change)="onCategoryChange($event)">
-          <option value="">All Categories</option>
+          <option value="">All</option>
           <option [value]="category.id" *ngFor="let category of categoryDropdown">{{ category.name }}</option>
         </select>
       </th>

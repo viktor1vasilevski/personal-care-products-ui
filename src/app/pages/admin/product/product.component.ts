@@ -1,19 +1,20 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ProductService } from '../../../core/services/product/product.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { Product } from '../../../models/product/product.model';
 import { ProductRequest } from '../../../models/requests/product-request.model';
-import { SingleResponse } from '../../../models/responses/single-response.model';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../../core/services/modals/modal.service';
 import { DetailsProductModalComponent } from '../../../core/components/modals/product/details-product-modal/details-product-modal.component';
+import { CategoryService } from '../../../core/services/category/category.service';
+import { SubcategoryService } from '../../../core/services/subcategory/subcategory.service';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [ CommonModule, ReactiveFormsModule ],
+  imports: [ CommonModule, ReactiveFormsModule, FormsModule  ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
@@ -21,37 +22,41 @@ export class ProductComponent implements OnInit {
 
   products: Product[] = [];
   totalCount: number = 0;
-  //skip: number = 0;
-  //itemsPerPage : number = 10;
   currentPage = 1;
   totalPages: number[] = [];
-  //sortOrder: string = 'desc';
-  filterForm: FormGroup;
 
   productRequest: ProductRequest = {
+    name: '',
+    brand: '',
+    edition:'',
+    scent:'',
+    categoryId: '',
+    subcategoryId: '',
     skip: 0,
     take: 10,
-    category: '',
-    subcategorty: '',
     sort: 'desc'
   };
+
+  categoryDropdown: any[] = [];
+  subcategoryDropdown: any[] = [];
 
   @ViewChild('detailsProductModal', { read: ViewContainerRef })
   detailsProductEntry!: ViewContainerRef;
   detailsProductSub!: Subscription;
 
   constructor(private _productService: ProductService,
+    private _categoryService: CategoryService,
+    private _subcategoryService: SubcategoryService,
     private _modalService: ModalService<any>,
     private fb: FormBuilder
   ) {
-    this.filterForm = this.fb.group({
-      category: [''],
-      subCategory: ['']
-    });
+
   }
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadCategoriesDropdown();
+    this.loadSubcategoriesDropdown();
   }
 
   loadProducts(): void {
@@ -68,21 +73,38 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  loadCategoriesDropdown(): void {
+    this._categoryService.getCategoriesDropdownList().subscribe((response: any) => {
+      this.categoryDropdown = response.data;
+    })
+  }
+
+  loadSubcategoriesDropdown(): void {
+    this._subcategoryService.getSubcategoriesDropdownList().subscribe((response: any) => {
+      this.subcategoryDropdown = response.data;
+    })
+  }
+
   createProduct() {
     
   }
 
-  detailsProduct(id: any): void {
-    this._productService.getProductById(id).subscribe((response: SingleResponse<Product>) => {
-      if(response && response.success && response.data) {
-        this.detailsProductSub = this._modalService.openModal(
-          this.detailsProductEntry, 
-          DetailsProductModalComponent,
-          response.data,
-          false).subscribe(() => {})
-      }
+  detailsProduct(product: any): void {
+
+    this.detailsProductSub = this._modalService.openModal(
+      this.detailsProductEntry, 
+      DetailsProductModalComponent,
+      product,
+      false).subscribe(() => {})
+
+
+
+    // this._productService.getProductById(id).subscribe((response: SingleResponse<Product>) => {
+    //   if(response && response.success && response.data) {
+        
+    //   }
       
-    })
+    // })
   }
 
   updateProduct(product: Product): void {
@@ -93,6 +115,7 @@ export class ProductComponent implements OnInit {
     console.log(product);
     
   }
+
 
   calculateTotalPages(): void {
     const pages = Math.ceil(this.totalCount / this.productRequest.take);
@@ -126,6 +149,21 @@ export class ProductComponent implements OnInit {
     this.productRequest.skip = 0;
     this.loadProducts();
   }
+
+  onCategoryChange(event: Event){
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+    this.productRequest.categoryId = selectedValue;
+    this.loadProducts()
+  }
+
+  onSubcategoryChange(event: Event){
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+    this.productRequest.subcategoryId = selectedValue;
+    this.loadProducts()
+  }
+
 
   previousPage(): void {
     if (this.productRequest.skip > 0) {
