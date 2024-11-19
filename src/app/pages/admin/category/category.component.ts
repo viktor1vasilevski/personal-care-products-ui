@@ -118,7 +118,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   createCategory() {
-    this.createCategorySub = this._modalService.openModal(this.createCategoryEntry, CreateCategoryModalComponent, null, true).subscribe((data: any) => {
+    this.createCategorySub = this._modalService.openModal(
+      this.createCategoryEntry, 
+      CreateCategoryModalComponent, 
+      null, 
+      true).subscribe((data: any) => {
       this._categoryService.createCategory(data).subscribe((response: SingleResponse<Category>) => {
         if(response && response.success && response.data) {
           this.loadCategories();

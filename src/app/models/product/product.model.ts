@@ -5,14 +5,15 @@ export interface Product {
     description: string;
     unitPrice: number;
     unitQuantity: number;
-    volume?: number;
-    scent?: string;
-    edition?: string;
-    imageData: Uint8Array;
-    category: string;
-    subcategory: string;
+    volume?: number; // Optional
+    scent?: string; // Optional
+    edition?: string; // Optional
+    image?: Uint8Array; // Renamed for consistency
+    category: string; // Could be an ID if applicable
+    subcategory: string; // Could be an ID if applicable
     createdBy: string;
     created: Date;
-    lastModifiedBy?: string;
-    lastModified?: Date;
-}
+    lastModifiedBy?: string; // Optional
+    lastModified?: Date; // Optional
+  }
+  

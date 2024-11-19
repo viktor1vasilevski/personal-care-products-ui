@@ -39,5 +39,27 @@ export class ProductService {
     const url = `${this.baseUrl}/${RESOURCE_PATH.PRODUCT}/${API_ENDPOINTS.GET_BY_ID}`;
     return this._dataApiService.getById<SingleResponse<Product>>(url, id);
   }
+
+  /**
+   * Create a new product
+   * @param productData Object containing product creation data
+   * @returns Observable of the created product response
+   */
+  createProduct(productData: {
+    name: string;
+    brand: string;
+    description: string;
+    unitPrice: number;
+    unitQuantity: number;
+    volume?: number;
+    scent?: string;
+    edition?: string;
+    image: ArrayBuffer; // Assuming the image is sent as a binary array
+    subcategoryId: string;
+  }): Observable<any> {
+    debugger
+    const url = `${this.baseUrl}/${RESOURCE_PATH.PRODUCT}/${API_ENDPOINTS.CREATE}`;
+    return this._dataApiService.create(url, productData);
+  }
   
 }

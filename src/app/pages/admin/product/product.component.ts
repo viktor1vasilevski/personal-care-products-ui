@@ -10,6 +10,7 @@ import { ModalService } from '../../../core/services/modals/modal.service';
 import { DetailsProductModalComponent } from '../../../core/components/modals/product/details-product-modal/details-product-modal.component';
 import { CategoryService } from '../../../core/services/category/category.service';
 import { SubcategoryService } from '../../../core/services/subcategory/subcategory.service';
+import { CreateProductModalComponent } from '../../../core/components/modals/product/create-product-modal/create-product-modal.component';
 
 @Component({
   selector: 'app-product',
@@ -44,11 +45,14 @@ export class ProductComponent implements OnInit {
   detailsProductEntry!: ViewContainerRef;
   detailsProductSub!: Subscription;
 
+  @ViewChild('createProductModal', { read: ViewContainerRef })
+  createProductEntry!: ViewContainerRef;
+  createProductSub!: Subscription;
+
   constructor(private _productService: ProductService,
     private _categoryService: CategoryService,
     private _subcategoryService: SubcategoryService,
-    private _modalService: ModalService<any>,
-    private fb: FormBuilder
+    private _modalService: ModalService<any>
   ) {
 
   }
@@ -86,25 +90,29 @@ export class ProductComponent implements OnInit {
   }
 
   createProduct() {
-    
+    this.createProductSub = this._modalService.openModal(
+      this.createProductEntry,
+      CreateProductModalComponent,
+      this.subcategoryDropdown,
+      true).subscribe((data:any) => {
+        debugger
+        this._productService.createProduct(data).subscribe((response: any) => {
+          console.log(response);
+          
+        },(err: any) => {
+          console.log(err);
+          
+        })
+        
+      })
   }
 
   detailsProduct(product: any): void {
-
     this.detailsProductSub = this._modalService.openModal(
       this.detailsProductEntry, 
       DetailsProductModalComponent,
       product,
       false).subscribe(() => {})
-
-
-
-    // this._productService.getProductById(id).subscribe((response: SingleResponse<Product>) => {
-    //   if(response && response.success && response.data) {
-        
-    //   }
-      
-    // })
   }
 
   updateProduct(product: Product): void {
@@ -181,6 +189,7 @@ export class ProductComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.detailsProductSub?.unsubscribe();
+    this.createProductSub?.unsubscribe();
   }
 
 }

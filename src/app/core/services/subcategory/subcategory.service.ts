@@ -49,7 +49,6 @@ export class SubcategoryService {
   }
 
   createSubcategory(subcategoryData: { name: string, categoryId: string }): Observable<any> {
-    debugger
     const url = `${this.baseUrl}/${RESOURCE_PATH.SUBCATEGORY}/${API_ENDPOINTS.CREATE}`;
     return this._dataApiService.create(url, subcategoryData);
   }
