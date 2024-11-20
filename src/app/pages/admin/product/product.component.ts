@@ -21,7 +21,7 @@ import { CreateProductModalComponent } from '../../../core/components/modals/pro
 })
 export class ProductComponent implements OnInit {
 
-  products: Product[] = [];
+  products: any[] = [];
   totalCount: number = 0;
   currentPage = 1;
   totalPages: number[] = [];
@@ -64,8 +64,10 @@ export class ProductComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this._productService.getProducts(this.productRequest).subscribe((response: QueryResponse<Product[]>) => {
+    this._productService.getProducts(this.productRequest).subscribe((response: any) => {
       if (response && response.success && response.data) {
+        console.log(response.data);
+        
         this.products = response.data;
       } else {
         this.products = [];
@@ -95,7 +97,8 @@ export class ProductComponent implements OnInit {
       CreateProductModalComponent,
       this.subcategoryDropdown,
       true).subscribe((data:any) => {
-        debugger
+        console.log(data);
+        
         this._productService.createProduct(data).subscribe((response: any) => {
           console.log(response);
           

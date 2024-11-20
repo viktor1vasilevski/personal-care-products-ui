@@ -8,7 +8,7 @@ export interface Product {
     volume?: number; // Optional
     scent?: string; // Optional
     edition?: string; // Optional
-    image?: Uint8Array; // Renamed for consistency
+    imageData?: string; // Renamed for consistency
     category: string; // Could be an ID if applicable
     subcategory: string; // Could be an ID if applicable
     createdBy: string;

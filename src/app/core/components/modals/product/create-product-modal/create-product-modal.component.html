@@ -45,7 +45,8 @@
 
                         <div class="form-group mb-3">
                             <label for="image">Image</label>
-                            <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" />
+                            <input type="file" id="image" (change)="onFileSelected($event)" class="form-control"
+                                formControlName="image" />
                             <div *ngIf="image?.invalid && image?.touched" class="text-danger">
                                 <small *ngIf="image?.errors?.['required']">Image is required.</small>
                             </div>

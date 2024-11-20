@@ -28,7 +28,7 @@ export class CreateProductModalComponent {
     volume: [null, [Validators.required, Validators.min(1)]],
     scent: [''],
     edition: [''],
-    image: [null as ArrayBuffer | null, [Validators.required]],  // Change from File to ArrayBuffer
+    image: ['', [Validators.required]],  // Change from File to ArrayBuffer
     subcategoryId: ['', [Validators.required]],
   });
   
@@ -77,25 +77,36 @@ export class CreateProductModalComponent {
   }
 
   onFileSelected(event: Event): void {
+    debugger; // Optional, remove in production
     const input = event.target as HTMLInputElement;
-    if (input && input.files && input.files[0]) {
-      this.selectedImageFile = input.files[0];
   
-      // Preview the image
-      this.previewImage(this.selectedImageFile);
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
   
-      // Convert the file to ArrayBuffer for further processing
+      // Validate the file type (optional)
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('Invalid file type! Please upload a JPG, PNG, or GIF image.');
+        return;
+      }
+  
       const reader = new FileReader();
+  
+      // Callback once the file is read
       reader.onload = () => {
-        if (reader.result instanceof ArrayBuffer) {
-          this.selectedImageData = reader.result; // Store the ArrayBuffer
-        } else {
-          console.error("FileReader result is not an ArrayBuffer.");
-        }
+        let base64String = reader.result as string;
+        console.log(base64String);
+        
+        this.createProductForm.patchValue({ image: base64String }); // Update the form with Base64 string
+        console.log(this.createProductForm);
+        debugger
+        
       };
-      reader.readAsArrayBuffer(this.selectedImageFile);
+  
+      reader.readAsDataURL(file); // Convert the file to Base64
     }
   }
+  
 
   // Preview image in the modal
   previewImage(file: File) {
@@ -111,11 +122,10 @@ export class CreateProductModalComponent {
   }
 
 
-  confirm() {
-    const productData = this.createProductForm.value;
-    if (this.selectedImageData) {
-      productData.image = this.selectedImageData;
-      this.confirmEvent.emit(productData);
+  confirm(): void {
+    debugger
+    if (this.createProductForm.valid) {
+      this.confirmEvent.emit(this.createProductForm.value); // Emit form data including Base64 image
     }
   }
   
