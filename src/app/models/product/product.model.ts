@@ -10,7 +10,8 @@ export interface Product {
     edition?: string; // Optional
     imageData?: string; // Renamed for consistency
     category: string; // Could be an ID if applicable
-    subcategory: string; // Could be an ID if applicable
+    subcategory: string;
+    subcategoriesDropdownList: any[];
     createdBy: string;
     created: Date;
     lastModifiedBy?: string; // Optional

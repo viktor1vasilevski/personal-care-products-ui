@@ -1,1 +1,130 @@
-<p>update-product-modal works!</p>
+<div class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-card">
+            <h4 class="mt-3 text-center">Create Product</h4>
+            <form [formGroup]="updateProductForm" (ngSubmit)="confirm()">
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Left Column -->
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" formControlName="name" class="form-control"
+                                    placeholder="Enter product name" autocomplete="off" />
+                                <div *ngIf="name?.invalid && name?.touched" class="text-danger">
+                                    <small *ngIf="name?.errors?.['required']">Name is required.</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" formControlName="name" class="form-control"
+                                    placeholder="Enter subcategory name" autocomplete="off">
+                                <div *ngIf="name?.invalid && name?.touched" class="text-danger">
+                                    <small *ngIf="name?.errors?.['required']">Name is required.</small>
+                                    <small *ngIf="name?.errors?.['minlength']">Name must be at least 3 characters
+                                        long.</small>
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-group mb-3">
+                                <label for="brand">Brand</label>
+                                <input type="text" id="brand" formControlName="brand" class="form-control"
+                                    placeholder="Enter product brand" autocomplete="off" />
+                                <div *ngIf="brand?.invalid && brand?.touched" class="text-danger">
+                                    <small *ngIf="brand?.errors?.['required']">Brand is required.</small>
+                                </div>
+                            </div> -->
+
+                            <!-- <div class="form-group mb-3">
+                                <label for="description">Description</label>
+                                <input type="text" id="description" formControlName="description" class="form-control"
+                                    placeholder="Enter product description" autocomplete="off" />
+                                <div *ngIf="description?.invalid && description?.touched" class="text-danger">
+                                    <small *ngIf="description?.errors?.['required']">description is required.</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="unitPrice">Unit Price</label>
+                                <input type="number" id="unitPrice" formControlName="unitPrice" class="form-control"
+                                    placeholder="Enter unit price" />
+                                <div *ngIf="unitPrice?.invalid && unitPrice?.touched" class="text-danger">
+                                    <small *ngIf="unitPrice?.errors?.['required']">Unit Price is required.</small>
+                                    <small *ngIf="unitPrice?.errors?.['min']">Unit Price must be greater than 0.</small>
+                                </div>
+                            </div> -->
+
+                            <!-- <div class="form-group mb-3">
+                                <label for="image">Image</label>
+                                <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" />
+                                <div *ngIf="image?.invalid && image?.touched" class="text-danger">
+                                    <small *ngIf="image?.errors?.['required']">Image is required.</small>
+                                </div>
+                                <div *ngIf="imagePreviewUrl">
+                                    <img [src]="imagePreviewUrl" alt="Image Preview" class="img-fluid mt-2" />
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <div class="col-md-6">
+                            <!-- <div class="form-group mb-3">
+                                <label for="volume">Volume</label>
+                                <input type="number" id="volume" formControlName="volume" class="form-control"
+                                    placeholder="Enter product volume" />
+                                <div *ngIf="volume?.invalid && volume?.touched" class="text-danger">
+                                    <small *ngIf="volume?.errors?.['required']">Volume is required.</small>
+                                    <small *ngIf="volume?.errors?.['min']">Unit Volume must be greater than 0.</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="scent">Scent</label>
+                                <input type="text" id="scent" formControlName="scent" class="form-control"
+                                    placeholder="Enter scent" autocomplete="off" />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="edition">Edition</label>
+                                <input type="text" id="edition" formControlName="edition" class="form-control"
+                                    placeholder="Enter edition" autocomplete="off" />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="subcategoryId">Subcategory</label>
+                                <select id="product" class="form-control" formControlName="subcategoryId">
+                                    <option *ngFor="let subcategory of data.subcategoriesDropdownList"
+                                        [value]="subcategory.id" [selected]="subcategory.id === data.subcategoryId">{{
+                                        subcategory.name }}</option>
+                                </select>
+                                <div *ngIf="subcategoryId?.invalid && subcategoryId?.touched" class="text-danger">
+                                    <small *ngIf="subcategoryId?.errors?.['required']">Subcategory is required.</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+
+                                <label for="unitQuantity">Unit Quantity</label>
+                                <input type="number" id="unitQuantity" formControlName="unitQuantity"
+                                    class="form-control" placeholder="Enter unit quantity" />
+                                <div *ngIf="unitQuantity?.invalid && unitQuantity?.touched" class="text-danger">
+                                    <small *ngIf="unitQuantity?.errors?.['required']">Unit Quantity is required.</small>
+                                    <small *ngIf="unitQuantity?.errors?.['min']">Quantity must be at least 1.</small>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row text-center mb-3">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-secondary w-100" (click)="closeMe()">Close</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-primary w-100">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -16,7 +16,6 @@ export class CreateProductModalComponent {
 
   data: any;
   imagePreviewUrl: string | ArrayBuffer | null = null;
-  selectedImageData?: ArrayBuffer;
 
   createProductForm = this.fb.group({
     name: ['', [Validators.required]],
@@ -30,8 +29,6 @@ export class CreateProductModalComponent {
     image: [ '' , [Validators.required]],
     subcategoryId: ['', [Validators.required]],
   });
-  
-
 
   constructor(private fb: FormBuilder) {}
 

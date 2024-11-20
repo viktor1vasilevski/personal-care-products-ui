@@ -12,6 +12,7 @@ import { SubcategoryService } from '../../../core/services/subcategory/subcatego
 import { CreateProductModalComponent } from '../../../core/components/modals/product/create-product-modal/create-product-modal.component';
 import { ToastrNotificationService } from '../../../core/services/toastr-notification.service';
 import { DeleteProductModalComponent } from '../../../core/components/modals/product/delete-product-modal/delete-product-modal.component';
+import { UpdateProductModalComponent } from '../../../core/components/modals/product/update-product-modal/update-product-modal.component';
 
 @Component({
   selector: 'app-product',
@@ -53,6 +54,10 @@ export class ProductComponent implements OnInit {
   @ViewChild('deleteProductModal', { read: ViewContainerRef })
   deleteProductEntry!: ViewContainerRef;
   deleteProductSub!: Subscription;
+
+  @ViewChild('updateProductModal', { read: ViewContainerRef })
+  updateProductEntry!: ViewContainerRef;
+  updateProductSub!: Subscription;
 
   constructor(private _productService: ProductService,
     private _categoryService: CategoryService,
@@ -126,7 +131,16 @@ export class ProductComponent implements OnInit {
   }
 
   updateProduct(product: Product): void {
-    console.log(product);
+    product.subcategoriesDropdownList = this.subcategoryDropdown;
+    this.updateProductSub = this._modalService.openModal(
+      this.updateProductEntry,
+      UpdateProductModalComponent,
+      product,
+      true)
+    .subscribe((data: any) => {
+      console.log(data);
+      
+    })
   }
 
   deleteProduct(product: Product) : void {
@@ -215,6 +229,7 @@ export class ProductComponent implements OnInit {
     this.detailsProductSub?.unsubscribe();
     this.createProductSub?.unsubscribe();
     this.deleteProductSub?.unsubscribe();
+    this.updateProductSub?.unsubscribe();
   }
 
 }

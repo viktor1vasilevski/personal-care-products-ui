@@ -133,6 +133,7 @@ export class SubcategoryComponent implements OnInit {
   }
 
   updateSubcategory(subcategory: Subcategory) {
+    debugger
     subcategory.categories = this.categoryDropdown;    
     this.updateSubcategorySub = this._modalService.openModal(
       this.updateSubcategoryEntry, 
