@@ -4,7 +4,8 @@
             <h4 class="modal-title">Product Details</h4>
             <hr>
             <div class="modal-body row">
-                <div class="col-12">
+                <!-- Left Column -->
+                <div class="col-md-6">
                     <div class="detail-item">
                         <strong>Name:</strong> {{ data?.name }}
                     </div>
@@ -16,6 +17,19 @@
                     </div>
                     <div class="detail-item">
                         <strong>Unit Price:</strong> {{ data?.unitPrice }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Category:</strong> {{ data?.category }}
+                    </div>
+                    <div class="detail-item">
+                        <strong>Created:</strong> {{ data?.created | date:'dd/MM/yyyy HH:mm' }}
+                    </div>
+
+                </div>
+                <!-- Right Column -->
+                <div class="col-md-6">
+                    <div class="detail-item" *ngIf="data?.modified">
+                        <strong>Modified:</strong> {{ data?.modified | date:'dd/MM/yyyy HH:mm' }}
                     </div>
                     <div class="detail-item">
                         <strong>Unit Quantity:</strong> {{ data?.unitQuantity }}
@@ -32,27 +46,26 @@
                     <div class="detail-item">
                         <strong>Subcategory:</strong> {{ data?.subcategory }}
                     </div>
-                    <div class="detail-item">
-                        <strong>Category:</strong> {{ data?.category }}
-                    </div>
-                    <div class="detail-item">
-                        <strong>Created:</strong> {{ data?.created | date: 'medium' }}
+                    <div class="detail-item" *ngIf="data?.modifiedBy">
+                        <strong>Modified By:</strong> {{ data?.modifiedBy }}
                     </div>
                     <div class="detail-item">
                         <strong>Created By:</strong> {{ data?.createdBy }}
                     </div>
-                    <div class="detail-item" *ngIf="data?.modified">
-                        <strong>Modified:</strong> {{ data?.modified | date: 'medium' }}
-                    </div>
-                    <div class="detail-item" *ngIf="data?.modifiedBy">
-                        <strong>Modified By:</strong> {{ data?.modifiedBy }}
-                    </div>
                     <div class="detail-item" *ngIf="data?.subcategories?.length > 0">
                         <strong>Subcategories:</strong>
-                        <ul class="subcategory-list">
-                            <li *ngFor="let subcategory of data?.subcategories">{{ subcategory }}</li>
-                        </ul>
+                        <div class="subcategory-list">
+                            <span class="badge badge-pill badge-primary"
+                                *ngFor="let subcategory of data?.subcategories">
+                                {{ subcategory }}
+                            </span>
+                        </div>
                     </div>
+                </div>
+                <!-- Centered Image -->
+                <div class="col-12 text-center my-3">
+                    <img class="img-thumbnail" style="height: 300px; width: 300px;"
+                        [src]="'data:image/jpeg;base64,' + data.imageData" alt="Product Image" />
                 </div>
             </div>
             <hr>

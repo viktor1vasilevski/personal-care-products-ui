@@ -10,7 +10,7 @@ export class ToastrNotificationService {
 
   showNotification(message: any, type: any) {
     const position = {
-      timeOut: 4000,
+      timeOut: 5000,
       positionClass: 'toast-bottom-right',
     };
   

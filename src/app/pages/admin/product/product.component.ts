@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ProductService } from '../../../core/services/product/product.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { QueryResponse } from '../../../models/responses/query-response.model';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Product } from '../../../models/product/product.model';
 import { ProductRequest } from '../../../models/requests/product-request.model';
 import { Subscription } from 'rxjs';
@@ -12,6 +11,7 @@ import { CategoryService } from '../../../core/services/category/category.servic
 import { SubcategoryService } from '../../../core/services/subcategory/subcategory.service';
 import { CreateProductModalComponent } from '../../../core/components/modals/product/create-product-modal/create-product-modal.component';
 import { ToastrNotificationService } from '../../../core/services/toastr-notification.service';
+import { DeleteProductModalComponent } from '../../../core/components/modals/product/delete-product-modal/delete-product-modal.component';
 
 @Component({
   selector: 'app-product',
@@ -49,6 +49,10 @@ export class ProductComponent implements OnInit {
   @ViewChild('createProductModal', { read: ViewContainerRef })
   createProductEntry!: ViewContainerRef;
   createProductSub!: Subscription;
+
+  @ViewChild('deleteProductModal', { read: ViewContainerRef })
+  deleteProductEntry!: ViewContainerRef;
+  deleteProductSub!: Subscription;
 
   constructor(private _productService: ProductService,
     private _categoryService: CategoryService,
@@ -126,7 +130,21 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(product: Product) : void {
-    console.log(product);
+    this.deleteProductSub = this._modalService.openModal(
+      this.deleteProductEntry,
+      DeleteProductModalComponent,
+      product,
+      true).subscribe(() => {
+        this._productService.deleteProduct(product.id).subscribe((response: any) => {
+          if(response && response.success && response.data) {
+            this.loadProducts();
+            this._toastrNotification.showNotification(response.message, response.notificationType);
+          } else {
+            this._toastrNotification.showNotification(response.message, response.notificationType);
+          }
+          
+        })
+      })
     
   }
 
@@ -196,6 +214,7 @@ export class ProductComponent implements OnInit {
   ngOnDestroy(): void {
     this.detailsProductSub?.unsubscribe();
     this.createProductSub?.unsubscribe();
+    this.deleteProductSub?.unsubscribe();
   }
 
 }

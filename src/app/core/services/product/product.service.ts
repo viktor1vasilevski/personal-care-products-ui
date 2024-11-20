@@ -40,6 +40,11 @@ export class ProductService {
     return this._dataApiService.getById<SingleResponse<Product>>(url, id);
   }
 
+  deleteProduct(id: string): Observable<any> {
+    const url = `${this.baseUrl}/${RESOURCE_PATH.PRODUCT}/${API_ENDPOINTS.DELETE}/${id}`;
+    return this._dataApiService.delete(url);
+  }
+
   /**
    * Create a new product
    * @param productData Object containing product creation data
