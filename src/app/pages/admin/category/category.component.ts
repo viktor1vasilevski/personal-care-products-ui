@@ -126,9 +126,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
       this._categoryService.createCategory(data).subscribe((response: SingleResponse<Category>) => {
         if(response && response.success && response.data) {
           this.loadCategories();
-          this._toastrNotification.showNotification(response);
+          this._toastrNotification.showNotification(response.message, response.notificationType);
         } else {
-          this._toastrNotification.showNotification(response);
+          this._toastrNotification.showNotification(response.message, response.notificationType);
         }
       })
       
@@ -149,9 +149,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this._categoryService.updateCategory(category.id, data).subscribe((response: SingleResponse<Category>) => {
           if(response && response.success && response.data) {
             this.loadCategories();
-            this._toastrNotification.showNotification(response);
+            this._toastrNotification.showNotification(response.message, response.notificationType);
           } else {
-            this._toastrNotification.showNotification(response);
+            this._toastrNotification.showNotification(response.message, response.notificationType);
           }      
         })
       }
@@ -164,9 +164,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
         debugger
         if(response && response.success && response.data) {
           this.loadCategories();
-          this._toastrNotification.showNotification(response);
+          this._toastrNotification.showNotification(response.message, response.notificationType);
         } else {
-          this._toastrNotification.showNotification(response);
+          this._toastrNotification.showNotification(response.message, response.notificationType);
         }  
       })
     })

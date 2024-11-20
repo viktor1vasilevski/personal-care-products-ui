@@ -54,10 +54,9 @@ export class ProductService {
     volume?: number;
     scent?: string;
     edition?: string;
-    image: ArrayBuffer; // Assuming the image is sent as a binary array
+    image: string; // Assuming the image is sent as a binary array
     subcategoryId: string;
   }): Observable<any> {
-    debugger
     const url = `${this.baseUrl}/${RESOURCE_PATH.PRODUCT}/${API_ENDPOINTS.CREATE}`;
     return this._dataApiService.create(url, productData);
   }

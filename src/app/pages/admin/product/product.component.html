@@ -53,7 +53,7 @@
   <tbody>
     <tr *ngFor="let product of products">
       <td>
-        <img [src]="'data:image/jpeg;base64,' + product.imageData" />
+        <img style="height: 100px; width: 100px;" [src]="'data:image/jpeg;base64,' + product.imageData" />
       </td>
       <td>{{ product.name }}</td>
       <td>{{ product.brand }}</td>

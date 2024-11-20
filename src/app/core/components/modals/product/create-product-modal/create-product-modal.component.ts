@@ -16,7 +16,6 @@ export class CreateProductModalComponent {
 
   data: any;
   imagePreviewUrl: string | ArrayBuffer | null = null;
-  selectedImageFile: File | null = null;
   selectedImageData?: ArrayBuffer;
 
   createProductForm = this.fb.group({
@@ -28,7 +27,7 @@ export class CreateProductModalComponent {
     volume: [null, [Validators.required, Validators.min(1)]],
     scent: [''],
     edition: [''],
-    image: ['', [Validators.required]],  // Change from File to ArrayBuffer
+    image: [ '' , [Validators.required]],
     subcategoryId: ['', [Validators.required]],
   });
   
@@ -77,45 +76,20 @@ export class CreateProductModalComponent {
   }
 
   onFileSelected(event: Event): void {
-    debugger; // Optional, remove in production
     const input = event.target as HTMLInputElement;
-  
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-  
-      // Validate the file type (optional)
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-      if (!allowedTypes.includes(file.type)) {
-        alert('Invalid file type! Please upload a JPG, PNG, or GIF image.');
-        return;
-      }
-  
       const reader = new FileReader();
-  
-      // Callback once the file is read
       reader.onload = () => {
-        let base64String = reader.result as string;
-        console.log(base64String);
-        
-        this.createProductForm.patchValue({ image: base64String }); // Update the form with Base64 string
-        console.log(this.createProductForm);
-        debugger
-        
+        const base64String = reader.result as string;
+        this.imagePreviewUrl = base64String;
+        this.createProductForm.patchValue({ image: base64String });
       };
-  
-      reader.readAsDataURL(file); // Convert the file to Base64
+
+      reader.readAsDataURL(file); 
     }
   }
   
-
-  // Preview image in the modal
-  previewImage(file: File) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      this.imagePreviewUrl = reader.result; // Set the image preview URL
-    };
-    reader.readAsDataURL(file); // Convert the file to base64 format
-  }
   
   closeMe() {
     this.closeMeEvent.emit();
@@ -123,9 +97,8 @@ export class CreateProductModalComponent {
 
 
   confirm(): void {
-    debugger
     if (this.createProductForm.valid) {
-      this.confirmEvent.emit(this.createProductForm.value); // Emit form data including Base64 image
+      this.confirmEvent.emit(this.createProductForm.value);
     }
   }
   

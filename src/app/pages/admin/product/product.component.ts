@@ -11,6 +11,7 @@ import { DetailsProductModalComponent } from '../../../core/components/modals/pr
 import { CategoryService } from '../../../core/services/category/category.service';
 import { SubcategoryService } from '../../../core/services/subcategory/subcategory.service';
 import { CreateProductModalComponent } from '../../../core/components/modals/product/create-product-modal/create-product-modal.component';
+import { ToastrNotificationService } from '../../../core/services/toastr-notification.service';
 
 @Component({
   selector: 'app-product',
@@ -52,6 +53,7 @@ export class ProductComponent implements OnInit {
   constructor(private _productService: ProductService,
     private _categoryService: CategoryService,
     private _subcategoryService: SubcategoryService,
+    private _toastrNotification: ToastrNotificationService,
     private _modalService: ModalService<any>
   ) {
 
@@ -96,14 +98,15 @@ export class ProductComponent implements OnInit {
       this.createProductEntry,
       CreateProductModalComponent,
       this.subcategoryDropdown,
-      true).subscribe((data:any) => {
-        console.log(data);
-        
+      true).subscribe((data:any) => {  
         this._productService.createProduct(data).subscribe((response: any) => {
-          console.log(response);
-          
-        },(err: any) => {
-          console.log(err);
+          debugger
+          if(response && response.success && response.data) {
+            this.loadProducts();
+            this._toastrNotification.showNotification(response.message, response.notificationType);
+          } else {
+            this._toastrNotification.showNotification(response.message, response.notificationType);
+          }
           
         })
         

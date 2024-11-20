@@ -8,27 +8,27 @@ export class ToastrNotificationService {
 
   constructor(private toastr: ToastrService) {}
 
-  showNotification(response: any) {
+  showNotification(message: any, type: any) {
     const position = {
       timeOut: 4000,
       positionClass: 'toast-bottom-right',
     };
   
-    switch (response.notificationType) {
+    switch (type) {
       case 0:
-        this.toastr.success(response.message, 'Success', position);
+        this.toastr.success(message, 'Success', position);
         break;
       case 1:
-        this.toastr.error(response.message, 'Error', position);
+        this.toastr.error(message, 'Error', position);
         break;
       case 2:
-        this.toastr.info(response.message, 'Info', position);
+        this.toastr.info(message, 'Info', position);
         break;
       case 3:
-        this.toastr.warning(response.message, 'Warning', position);
+        this.toastr.warning(message, 'Warning', position);
         break;
       default:
-        this.toastr.info(response.message, 'Info', position);
+        this.toastr.info(message, 'Info', position);
         break;
     }
   }

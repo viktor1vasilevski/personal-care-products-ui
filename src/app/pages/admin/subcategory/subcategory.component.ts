@@ -123,9 +123,9 @@ export class SubcategoryComponent implements OnInit {
       this._subcategoryService.deleteSubcategory(subcategory.id).subscribe((response: SingleResponse<Subcategory>) => {
         if(response && response.success && response.data) {
           this.loadSubcategories();
-          this._toastrNotification.showNotification(response);
+          this._toastrNotification.showNotification(response.message, response.notificationType);
         } else {
-          this._toastrNotification.showNotification(response);
+          this._toastrNotification.showNotification(response.message, response.notificationType);
         }
       })
     })
@@ -143,9 +143,9 @@ export class SubcategoryComponent implements OnInit {
           debugger
           if(response && response.success && response.data) {
             this.loadSubcategories();
-            this._toastrNotification.showNotification(response);
+            this._toastrNotification.showNotification(response.message, response.notificationType);
           } else {
-            this._toastrNotification.showNotification(response);
+            this._toastrNotification.showNotification(response.message, response.notificationType);
           }
           
         })
@@ -166,9 +166,9 @@ export class SubcategoryComponent implements OnInit {
         this._subcategoryService.createSubcategory(data).subscribe((response: any) => {
           if(response && response.success && response.data) {
             this.loadSubcategories();
-            this._toastrNotification.showNotification(response);
+            this._toastrNotification.showNotification(response.message, response.notificationType);
           } else {
-            this._toastrNotification.showNotification(response);
+            this._toastrNotification.showNotification(response.message, response.notificationType);
           }    
         })  
       }) 
