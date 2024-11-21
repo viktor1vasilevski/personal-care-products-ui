@@ -39,7 +39,7 @@ export class UpdateProductModalComponent implements OnInit {
     if (this.data) {
       if(this.data.imageData != "") {
         this.imagePreviewUrl = `${this.imagePrefix}${this.data.imageData}`;
-        this.updateProductForm.patchValue({ image: this.data.ImageData })
+        this.updateProductForm.patchValue({ image: `${this.data.imageData}` })
       }
       this.updateProductForm.patchValue({
         name: this.data.name,
@@ -96,6 +96,7 @@ export class UpdateProductModalComponent implements OnInit {
   }
 
   onFileSelected(event: Event): void {
+    debugger
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
@@ -115,9 +116,13 @@ export class UpdateProductModalComponent implements OnInit {
     this.closeMeEvent.emit();
   }
 
-
-  confirm(): void {
-    this.confirmEvent.emit();
+  confirm() {
+    if (this.updateProductForm.valid) {
+      const { name, brand, description, unitPrice, unitQuantity, image, volume, scent, edition, subcategoryId } = this.updateProductForm.value;
+      const updatedProductData: any = { name, brand, description, unitPrice, unitQuantity, image, volume, scent, edition, subcategoryId };
+      
+      this.confirmEvent.emit(updatedProductData);
+    }
   }
 
 }
