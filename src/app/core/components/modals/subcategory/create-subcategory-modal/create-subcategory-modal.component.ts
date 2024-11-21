@@ -34,12 +34,9 @@ export class CreateSubcategoryModalComponent {
 
 
   confirm() {
-    debugger
     if (this.createSubcategoryForm.valid) {
       const { name, categoryId } = this.createSubcategoryForm.value;
       const createSubcategoryData = { name, categoryId };
-      debugger
-      // Emit the form data
       this.confirmEvent.emit(createSubcategoryData);
     }
   }

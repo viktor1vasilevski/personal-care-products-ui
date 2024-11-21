@@ -21,13 +21,12 @@ export class UpdateSubcategoryModalComponen  implements OnInit {
   constructor(private fb: FormBuilder) {
     this.updateSubcategoryForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      categoryId: ['', Validators.required] // Add category form control
+      categoryId: ['', Validators.required]
     });
   }
 
 
   ngOnInit() {
-    debugger
     if (this.data) {
       this.updateSubcategoryForm.patchValue({
         name: this.data.name,
@@ -49,7 +48,6 @@ export class UpdateSubcategoryModalComponen  implements OnInit {
   }
 
   confirm() { 
-    debugger
     if (this.updateSubcategoryForm.valid) {
       const { name, categoryId } = this.updateSubcategoryForm.value;
       const updatedSubcategoryData: any = { name, categoryId };

@@ -165,7 +165,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
       category, 
       true).subscribe(() => {
       this._categoryService.deleteCategory(category.id).subscribe((response: SingleResponse<Category>) => {
-        debugger
         if(response && response.success && response.data) {
           this.loadCategories();
           this._toastrNotification.showNotification(response.message, response.notificationType);

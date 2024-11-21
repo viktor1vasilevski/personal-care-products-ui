@@ -87,7 +87,6 @@ export class SubcategoryComponent implements OnInit {
   }
 
   onCategoryChange(event: Event): void {
-    debugger
     const selectElement = event.target as HTMLSelectElement;
     const selectedValue = selectElement.value;
     this.subcategoryRequest.categoryId = selectedValue;
@@ -133,7 +132,6 @@ export class SubcategoryComponent implements OnInit {
   }
 
   updateSubcategory(subcategory: Subcategory) {
-    debugger
     subcategory.categories = this.categoryDropdown;    
     this.updateSubcategorySub = this._modalService.openModal(
       this.updateSubcategoryEntry, 
@@ -141,7 +139,6 @@ export class SubcategoryComponent implements OnInit {
       subcategory, 
       true).subscribe((data: any) => {
         this._subcategoryService.updateSubcategory(subcategory.id, data).subscribe((response:any) => {
-          debugger
           if(response && response.success && response.data) {
             this.loadSubcategories();
             this._toastrNotification.showNotification(response.message, response.notificationType);

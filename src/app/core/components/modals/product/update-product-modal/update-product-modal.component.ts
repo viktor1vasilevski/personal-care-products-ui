@@ -17,19 +17,40 @@ export class UpdateProductModalComponent implements OnInit {
   updateProductForm: FormGroup;
   data: any;
   imagePreviewUrl: string | ArrayBuffer | null = null;
+  imagePrefix = 'data:image/jpeg;base64,';
 
     
   constructor(private fb: FormBuilder) {
     this.updateProductForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]]
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      brand: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      unitPrice: ['', [Validators.required, Validators.min(0.01)]],
+      unitQuantity: [null, [Validators.required, Validators.min(1)]],
+      image: ['', [Validators.required]],
+      volume: [null, [Validators.required, Validators.min(1)]],
+      scent: [''],
+      edition: [''],
+      subcategoryId: ['', [Validators.required]],
     });
   }
   
   ngOnInit() {
-    debugger
     if (this.data) {
+      if(this.data.imageData != "") {
+        this.imagePreviewUrl = `${this.imagePrefix}${this.data.imageData}`;
+        this.updateProductForm.patchValue({ image: this.data.ImageData })
+      }
       this.updateProductForm.patchValue({
         name: this.data.name,
+        brand: this.data.brand,
+        description: this.data.description,
+        unitPrice: this.data.unitPrice,
+        edition: this.data.edition,
+        volume: this.data.volume,
+        scent: this.data.scent,
+        unitQuantity: this.data.unitQuantity,
+        subcategoryId: this.data.subcategoryId
       });
     }
   }

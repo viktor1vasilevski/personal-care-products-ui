@@ -76,9 +76,7 @@ export class ProductComponent implements OnInit {
 
   loadProducts(): void {
     this._productService.getProducts(this.productRequest).subscribe((response: any) => {
-      if (response && response.success && response.data) {
-        console.log(response.data);
-        
+      if (response && response.success && response.data) { 
         this.products = response.data;
       } else {
         this.products = [];
@@ -109,7 +107,6 @@ export class ProductComponent implements OnInit {
       this.subcategoryDropdown,
       true).subscribe((data:any) => {  
         this._productService.createProduct(data).subscribe((response: any) => {
-          debugger
           if(response && response.success && response.data) {
             this.loadProducts();
             this._toastrNotification.showNotification(response.message, response.notificationType);

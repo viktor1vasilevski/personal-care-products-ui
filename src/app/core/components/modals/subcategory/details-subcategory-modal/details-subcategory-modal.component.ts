@@ -14,11 +14,6 @@ export class DetailsSubcategoryModalComponent {
 
   data: any;
 
-  ngOnInit(): void {
-    console.log(this.data);
-    
-  }
-
   closeMe() {
     this.closeMeEvent.emit();
   }
