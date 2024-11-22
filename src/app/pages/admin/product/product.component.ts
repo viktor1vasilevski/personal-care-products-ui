@@ -136,8 +136,12 @@ export class ProductComponent implements OnInit {
       true)
     .subscribe((data: any) => {
       this._productService.updateProduct(product.id, data).subscribe((response: any) => {
-        console.log(response);
-        
+        if(response && response.success && response.data) {
+          this.loadProducts();
+          this._toastrNotification.showNotification(response.message, response.notificationType);
+        } else {
+          this._toastrNotification.showNotification(response.message, response.notificationType);
+        }    
       })
       
     })
