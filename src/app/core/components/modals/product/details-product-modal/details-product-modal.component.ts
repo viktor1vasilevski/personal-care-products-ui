@@ -15,7 +15,6 @@ export class DetailsProductModalComponent {
   data: any;
 
   get imageSrc(): string {
-    debugger
     return `data:image/${this.data.imageType};base64,${this.data.imageData}`;
   }
   

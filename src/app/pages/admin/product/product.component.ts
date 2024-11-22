@@ -135,7 +135,10 @@ export class ProductComponent implements OnInit {
       product,
       true)
     .subscribe((data: any) => {
-      console.log(data);
+      this._productService.updateProduct(product.id, data).subscribe((response: any) => {
+        console.log(response);
+        
+      })
       
     })
   }

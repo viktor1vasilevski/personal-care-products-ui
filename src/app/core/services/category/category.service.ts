@@ -8,10 +8,7 @@ import { API_ENDPOINTS } from '../../../shared/constants/endpoints/api-endpoints
 import { QueryResponse } from '../../../models/responses/query-response.model';
 import { Category } from '../../../models/category/category.model';
 import { SingleResponse } from '../../../models/responses/single-response.model';
-import { ProductRequest } from '../../../models/requests/product-request.model';
-import { Product } from '../../../models/product/product.model';
 import { CategoryRequest } from '../../../models/requests/category-request.model';
-import { CategoryDropdownRequest } from '../../../models/requests/category-dropdown-request.model';
 
 @Injectable({
   providedIn: 'root'

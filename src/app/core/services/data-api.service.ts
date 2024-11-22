@@ -1,8 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { QueryResponse } from '../../models/responses/query-response.model';
-import { SingleResponse } from '../../models/responses/single-response.model';
 
 @Injectable({
   providedIn: 'root'

@@ -66,8 +66,20 @@ export class ProductService {
     return this._dataApiService.create(url, productData);
   }
 
-  updateProduct(id: string, productData: { name: string }): Observable<any> {
-    const url = `${this.baseUrl}/${RESOURCE_PATH.CATEGORY}/${API_ENDPOINTS.UPDATE}/${id}`;
+  updateProduct(id: string, productData: { 
+    name: string;
+    brand: string;
+    description: string;
+    unitPrice: number;
+    unitQuantity: number;
+    volume?: number;
+    scent?: string;
+    edition?: string;
+    image: string;
+    subcategoryId: string;
+  }): Observable<any> {
+    debugger
+    const url = `${this.baseUrl}/${RESOURCE_PATH.PRODUCT}/${API_ENDPOINTS.UPDATE}/${id}`;
     return this._dataApiService.update(url, productData);
   }
   
